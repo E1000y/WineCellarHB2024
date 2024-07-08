@@ -20,7 +20,21 @@ namespace Models
 
         public int GrapeVariety { get; set; }
 
+        public int Tava { get; set; }
 
+        public int Capacity { get; set; }
+
+        public string WineMakerName { get; set; }
+
+        public string VintageName { get; set; }
+
+        public string Aroma { get; set; }
+
+        public int Price { get; set; }
+
+        public DateOnly PurchaseDate { get; set; }
+
+        public string RelatedMeals { get; set; }
 
     }
 }
