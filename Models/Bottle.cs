@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Bottle
+    public class Bottle
     {
         public int Id { get; set; }
         public string? Color { get; set; }
@@ -36,5 +36,10 @@ namespace Models
 
         public string? RelatedMeals { get; set; }
 
+        public int? DrawerPosition { get; set; }
+
+        public Drawer? Drawer { get; set; }
+
+        public int DrawerId { get; set; }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineCellarHB2024", "WineCel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{8B2C75B3-5F74-4097-857E-42E59888F941}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{5AA35243-F039-48DD-8960-54FD83D69032}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8B2C75B3-5F74-4097-857E-42E59888F941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B2C75B3-5F74-4097-857E-42E59888F941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B2C75B3-5F74-4097-857E-42E59888F941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA35243-F039-48DD-8960-54FD83D69032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA35243-F039-48DD-8960-54FD83D69032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA35243-F039-48DD-8960-54FD83D69032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA35243-F039-48DD-8960-54FD83D69032}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
