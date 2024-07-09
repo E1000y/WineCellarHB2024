@@ -15,13 +15,40 @@ namespace DAL.Repository
 
         public UserRepository(CellarContext ct)
         {
-            _ct = ct; 
+            _ct = ct;
         }
 
+        
         public List<CellarUser> GetAll()
         {
-            return _ct.Users.ToList();
+            var stock = _ct.Users;
+            return stock.ToList() ;
 
         }
+
+
+        public CellarUser GetById(int id)
+        {
+            return _ct.Users.FirstOrDefault(u => u.Id == id);
+        }
+
+        public void Update(CellarUser user)
+        {
+            _ct.Users.Update(user);
+            _ct.SaveChanges();
+
+        }
+        public void Create(CellarUser user)
+        {
+            _ct.Users.Add(user);
+            _ct.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            _ct.Users.Remove(GetById(id));
+            _ct.SaveChanges();
+        }
+
     }
 }

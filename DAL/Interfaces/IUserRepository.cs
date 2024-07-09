@@ -9,6 +9,16 @@ namespace DAL.Interfaces
 {
     public interface IUserRepository
     {
-        List<CellarUser> GetAll();
+        public List<CellarUser> GetAll();
+
+
+        public CellarUser GetById(int id);
+
+        public void Create(CellarUser user);
+
+        public void Update(CellarUser user);
+
+
+        public void Delete(int id);
     }
 }
