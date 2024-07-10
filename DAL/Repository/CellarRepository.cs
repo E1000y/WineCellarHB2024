@@ -1,0 +1,51 @@
+﻿using Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAL.Repository
+{
+    public class CellarRepository
+    {
+        private readonly CellarContext _ct;
+
+        public CellarRepository(CellarContext ct)
+        {
+            _ct = ct;
+        }
+
+
+        public List<Cellar> GetAll()
+        {
+            return _ct.Cellars.ToList();
+        }
+
+
+        public Cellar GetById(int id)
+        {
+            return _ct.Cellars.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void Update(Cellar cellar)
+        {
+            _ct.Cellars.Update(cellar);
+            _ct.SaveChanges();
+
+        }
+        public void Create(Cellar cellar)
+        {
+            _ct.Cellars.Add(cellar);
+            _ct.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            _ct.Cellars.Remove(GetById(id));
+            _ct.SaveChanges();
+        }
+
+    }
+}
+
