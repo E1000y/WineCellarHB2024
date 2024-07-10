@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
-    public class CellarRepository :ICellarRepository
+    public class CellarRepository : ICellarRepository
     {
         private readonly CellarContext _ct;
 
