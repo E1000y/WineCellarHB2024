@@ -17,6 +17,6 @@ namespace DAL.Interfaces
 
         public void Update(Cellar user);
 
-        public void Delete(int id);
+        public Cellar Delete(int id);
     }
 }

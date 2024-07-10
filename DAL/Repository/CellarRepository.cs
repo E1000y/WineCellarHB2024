@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DAL.Interfaces;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
-    public class CellarRepository
+    public class CellarRepository :ICellarRepository
     {
         private readonly CellarContext _ct;
 
@@ -40,10 +41,13 @@ namespace DAL.Repository
             _ct.SaveChanges();
         }
 
-        public void Delete(int id)
+        public Cellar Delete(int id)
         {
             _ct.Cellars.Remove(GetById(id));
             _ct.SaveChanges();
+            var cellar = this._ct.Cellars.Find(id);
+            return cellar;
+
         }
 
     }

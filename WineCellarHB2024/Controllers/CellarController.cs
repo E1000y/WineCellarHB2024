@@ -46,6 +46,7 @@ namespace WineCellarHB2024.Controllers
             cellar.Family = cellardto.Family;
             cellar.Manufacturer = cellardto.Manufacturer;
             cellar.Temperature = cellardto.Temperature;
+            cellar.CellarUserId = cellardto.CellarUserId;
 
 
             this.cellarRepository.Create(cellar);
@@ -70,6 +71,8 @@ namespace WineCellarHB2024.Controllers
             cellar.Family = cellarpdto.Family;
             cellar.Manufacturer = cellarpdto.Manufacturer;
             cellar.Temperature = cellarpdto.Temperature;
+            cellar.CellarUserId = cellarpdto.CellarUserId;
+
 
             this.cellarRepository.Update(cellar);
 
@@ -79,9 +82,11 @@ namespace WineCellarHB2024.Controllers
 
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteUser([FromRoute] int id)
+        public IActionResult DeleteCellar([FromRoute] int id)
         {
 
+            if (id <= 0)
+                return BadRequest();
 
             cellarRepository.Delete(id);
 
