@@ -24,7 +24,26 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult GetUsers()
         {
-            return Ok(this._userRepository.GetAll());
+            List<CellarUser> users = this._userRepository.GetAll();
+            List<UserGetDTO> userGetDTOList = new List<UserGetDTO>();
+
+            foreach (CellarUser user in users)
+            {
+                UserGetDTO userGetDTO = new UserGetDTO();
+
+                userGetDTO.Id = user.Id;
+                userGetDTO.FirstName = user.FirstName;
+                userGetDTO.LastName = user.LastName;
+                userGetDTO.BirthDate = user.BirthDate;
+                userGetDTO.Email = user.Email;
+                userGetDTO.Password = user.Password;
+                userGetDTO.PhoneNumber = user.PhoneNumber;
+                userGetDTO.Address = user.Address;
+                userGetDTOList.Add(userGetDTO);
+
+            }
+
+            return Ok(userGetDTOList);
         }
 
 
@@ -33,7 +52,19 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult GetUser(int id)
         {
-            return Ok(this._userRepository.GetById(id));
+            var user = this._userRepository.GetById(id);
+            UserGetDTO userGetDTO = new UserGetDTO();
+
+            userGetDTO.Id = user.Id;
+            userGetDTO.FirstName = user.FirstName;
+            userGetDTO.LastName = user.LastName;
+            userGetDTO.BirthDate = user.BirthDate;
+            userGetDTO.Email = user.Email;
+            userGetDTO.Password = user.Password;
+            userGetDTO.PhoneNumber = user.PhoneNumber;
+            userGetDTO.Address = user.Address;
+
+            return Ok(userGetDTO);
         }
 
         [HttpPost]
