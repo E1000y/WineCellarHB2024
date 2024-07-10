@@ -25,21 +25,24 @@ namespace WineCellarHB2024.Controllers
         {
 
             List<Cellar> cellars = this.cellarRepository.GetAll();
-            CellarGetDTO cellarGetDTO = new CellarGetDTO();
+            List<CellarGetDTO> cellarGetDTOList = new List<CellarGetDTO>();
 
             foreach (Cellar cellar in cellars)
             {
+                CellarGetDTO cellarGetDTO = new CellarGetDTO();
+
                 cellarGetDTO.Id = cellar.Id;
                 cellarGetDTO.Name = cellar.Name;
                 cellarGetDTO.Family = cellar.Family;
                 cellarGetDTO.Manufacturer = cellar.Manufacturer;
                 cellarGetDTO.Temperature = cellar.Temperature;
                 cellarGetDTO.CellarUserId = cellar.CellarUserId;
+                cellarGetDTOList.Add(cellarGetDTO);
             }
 
 
 
-            return Ok(cellarGetDTO);
+            return Ok(cellarGetDTOList);
         }
 
 
