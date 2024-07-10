@@ -52,15 +52,12 @@ namespace WineCellarHB2024.Controllers
             var cellar = this.cellarRepository.GetById(id);
             CellarGetDTO cellarGetDTO = new CellarGetDTO();
 
-            foreach (Cellar cellar in cellarGetDTO)
-            {
                 cellarGetDTO.Id = cellar.Id;
                 cellarGetDTO.Name = cellar.Name;
                 cellarGetDTO.Family = cellar.Family;
                 cellarGetDTO.Manufacturer = cellar.Manufacturer;
                 cellarGetDTO.Temperature = cellar.Temperature;
                 cellarGetDTO.CellarUserId = cellar.CellarUserId;
-            }
 
             return Ok(cellarGetDTO);
         }

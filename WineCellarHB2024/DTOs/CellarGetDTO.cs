@@ -2,7 +2,7 @@
 
 namespace WineCellarHB2024.DTOs
 {
-    internal class CellarGetDTO
+    public class CellarGetDTO
     {
 
         public int Id { get; set; }

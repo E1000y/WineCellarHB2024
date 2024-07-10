@@ -22,7 +22,21 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult GetAll()
         {
-            return Ok(_drawerRepository.GetAll());
+            List<Drawer> drawers = this._drawerRepository.GetAll();
+            List<DrawerGetDTO> drawerGetDTOList = new List<DrawerGetDTO>();
+
+            foreach (Drawer drawer in drawers)
+            {
+                DrawerGetDTO drawerGetDTO  = new DrawerGetDTO();
+
+                drawerGetDTO.Id = drawer.Id;
+                drawerGetDTO.Number = drawer.Number;
+                drawerGetDTO.NbOfBottlesPerDrawer = drawer.NbOfBottlesPerDrawer;
+                drawerGetDTOList.Add(drawerGetDTO);
+
+            }
+
+            return Ok(drawerGetDTOList);
         }
 
         [HttpGet("{id}")]

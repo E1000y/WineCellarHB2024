@@ -21,9 +21,7 @@ namespace DAL.Repository
         
         public List<CellarUser> GetAll()
         {
-            var stock = _ct.Users;
-            return stock.ToList() ;
-
+            return _ct.Users.ToList() ;
         }
 
 
