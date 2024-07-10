@@ -12,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CellarContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICellarRepository, CellarRepository>();
+builder.Services.AddScoped<IDrawerRepository, DrawerRepository>();
 
 var app = builder.Build();
 

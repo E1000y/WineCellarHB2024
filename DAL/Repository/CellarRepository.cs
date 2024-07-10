@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DAL.Interfaces;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
-    public class CellarRepository
+    public class CellarRepository : ICellarRepository
     {
         private readonly CellarContext _ct;
 
