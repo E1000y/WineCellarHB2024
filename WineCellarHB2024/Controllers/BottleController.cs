@@ -37,7 +37,10 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult CreateBottles([FromBody] BottlePostDTO bottletopost)
         {
-
+            if (bottletopost.DrawerId <= 0)
+            {
+                return BadRequest();
+            }
 
             Bottle bottle = new Bottle();
             bottle.Color = bottletopost.Color;
