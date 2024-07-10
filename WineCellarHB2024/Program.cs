@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CellarContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IBottleRepository, BottleRepository>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
