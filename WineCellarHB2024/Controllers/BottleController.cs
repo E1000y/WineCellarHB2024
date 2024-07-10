@@ -35,22 +35,32 @@ namespace WineCellarHB2024.Controllers
 
         [HttpPost]
 
-        public IActionResult CreateBottles([FromBody] BottlePostDTO bottletoput)
+        public IActionResult CreateBottles([FromBody] BottlePostDTO bottletopost)
         {
 
 
             Bottle bottle = new Bottle();
-            bottle.GrapeVariety =bottletoput.GrapeVariety;
-            bottle.Tava =bottletoput.Tava;
-            bottle.Capacity = bottletoput.Capacity;
-            bottle.WineMakerName =bottletoput.WineMakerName;
-            bottle.VintageName=bottletoput.VintageName;
-            bottle.Aroma=bottletoput.Aroma;
-            bottle.Price=bottletoput.Price;
-            bottle.PurchaseDate=bottletoput.PurchaseDate;
-            bottle.RelatedMeals=bottletoput.RelatedMeals;
-            bottle.DrawerPosition=bottletoput.DrawerPosition;
-            bottle.DrawerId=bottletoput.DrawerId;
+            bottle.Color = bottletopost.Color;
+            bottle.Name = bottletopost.Name;
+            bottle.FullName = bottletopost.FullName;
+            bottle.VintageYear = bottletopost.VintageYear;
+            bottle.YearsOfKeep = bottletopost.YearsOfKeep;
+            bottle.DomainName = bottletopost.DomainName;
+            bottle.PeakInDate = bottletopost.PeakInDate;
+            bottle.PeakOutDate = bottletopost.PeakOutDate;
+
+            bottle.GrapeVariety =bottletopost.GrapeVariety;
+            bottle.Tava =bottletopost.Tava;
+            bottle.Capacity = bottletopost.Capacity;
+            bottle.WineMakerName =bottletopost.WineMakerName;
+            bottle.VintageName=bottletopost.VintageName;
+            bottle.Aroma=bottletopost.Aroma;
+            bottle.Price=bottletopost.Price;
+            bottle.PurchaseDate=bottletopost.PurchaseDate;
+            bottle.RelatedMeals=bottletopost.RelatedMeals;
+            bottle.DrawerPosition=bottletopost.DrawerPosition;
+ //           bottle.Drawer = bottletopost.Drawer
+            bottle.DrawerId=bottletopost.DrawerId;
 
 
            this._bottleRepository.CreateNewBottle(bottle);
@@ -70,7 +80,15 @@ namespace WineCellarHB2024.Controllers
             }
 
             Bottle bottle = new Bottle();
+            bottle.Id = bottletoput.Id;
+            bottle.Color = bottletoput.Color;
+            bottle.Name = bottletoput.Name;
             bottle.FullName = bottletoput.FullName;
+            bottle.VintageYear = bottletoput.VintageYear;
+            bottle.YearsOfKeep = bottletoput.YearsOfKeep;
+            bottle.DomainName = bottletoput.DomainName;
+            bottle.PeakInDate = bottletoput.PeakInDate;
+            bottle.PeakOutDate = bottletoput.PeakOutDate;
             bottle.GrapeVariety = bottletoput.GrapeVariety;
             bottle.Tava = bottletoput.Tava;
             bottle.Capacity = bottletoput.Capacity;
@@ -80,8 +98,9 @@ namespace WineCellarHB2024.Controllers
             bottle.Price = bottletoput.Price;
             bottle.PurchaseDate = bottletoput.PurchaseDate;
             bottle.RelatedMeals = bottletoput.RelatedMeals;
-            bottle.DrawerPosition = bottletoput.DrawerPosition;
+            bottle.DrawerPosition = bottletoput.DrawerPosition; 
             bottle.DrawerId = bottletoput.DrawerId;
+            
 
             this._bottleRepository.UpdateBottle(bottle);
 

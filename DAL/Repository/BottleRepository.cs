@@ -29,7 +29,7 @@ namespace DAL.Repository
         public Bottle? GetbottlebyID(int Id) => _ct.Bottles.FirstOrDefault(u => u.Id == Id);
         public void UpdateBottle(Bottle bottle)
         {
-            _ct.Bottles.Add(bottle);
+            _ct.Bottles.Update(bottle);
             _ct.SaveChanges();
 
         }
