@@ -18,7 +18,7 @@ namespace Models
         public DateOnly? PeakInDate { get; set; }
         public DateOnly? PeakOutDate { get; set; }
 
-        public int? GrapeVariety { get; set; }
+        public string? GrapeVariety { get; set; }
 
         public int? Tava { get; set; }
 
