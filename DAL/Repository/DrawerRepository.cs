@@ -23,7 +23,11 @@ namespace DAL.Repository
             return _ct.Drawers.ToList();
         }
 
-
+        public List<Drawer> GetByCellarId(int cellarId) {
+          
+            
+            return _ct.Drawers?.Where(d => d.CellarId == cellarId).ToList(); 
+        }
 
         public Drawer GetById(int id)
         {

@@ -63,6 +63,12 @@ namespace WineCellarHB2024.Controllers
 
             //get dans le cellar, le drawer avec le cellarid
 
+
+            List<Drawer> drawers = this._drawerRepository.GetByCellarId(drawerPostDTO.CellarId);
+           
+            // maintenant, vérifier qu'aucun drawer n'a le même numéro 
+
+            if(CheckNoDrawerHasSameNumberThanInDrawerPostDTO(drawerPostDTO, drawers)) { BadRequest("another drawer has the same number in this cellar"); };
            
 
             Drawer drawer = new Drawer();
@@ -72,6 +78,19 @@ namespace WineCellarHB2024.Controllers
 
             this._drawerRepository.Create(drawer);
             return Created($"drawer/{drawer.Id}", drawer);
+        }
+
+        private bool CheckNoDrawerHasSameNumberThanInDrawerPostDTO(DrawerPostDTO drawerPostDTO, List<Drawer> drawers)
+        {
+           bool flag = false;
+            foreach (Drawer drawer in drawers)
+            {
+                if (drawer.Number == drawerPostDTO.Number) { flag = true; break; }
+            }
+
+            return flag;
+            
+
         }
 
         [HttpPut("{id}")]

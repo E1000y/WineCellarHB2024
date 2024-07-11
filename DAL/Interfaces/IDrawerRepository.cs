@@ -13,6 +13,7 @@ namespace DAL.Interfaces
         public List<Drawer> GetAll();
 
         public Drawer GetById(int id);
+        public List<Drawer> GetByCellarId(int cellarId);
 
         public void Create(Drawer drawer);
 
