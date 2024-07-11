@@ -42,6 +42,21 @@ namespace WineCellarHB2024.Controllers
                 return BadRequest();
             }
 
+            /*
+             * faire en sorte que la bouteille ne puisse pas avoir la même position qu'une autre bouteille pour un même drawerId           
+             * 
+             * Je ne dois pas pouvoir post une bottle si une existe déjà pour le drawerId et le drawerposition.
+             */
+
+
+            if (IsBottleExistingForDrawerIdAndDrawerPosition(bottletopost.DrawerId, bottletopost.DrawerPosition))
+            {
+                return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
+            }
+
+
+
+
             Bottle bottle = new Bottle();
             bottle.Color = bottletopost.Color;
             bottle.Name = bottletopost.Name;
@@ -73,16 +88,33 @@ namespace WineCellarHB2024.Controllers
 
         }
 
+        private bool IsBottleExistingForDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition)
+        {
+            Bottle? bottle = this._bottleRepository.GetBottleByDrawerIdAndDrawerPosition(drawerId, drawerPosition);
+
+           return bottle != null;
+        }
+
         [HttpPut("{id}")]
 
-        public IActionResult ModifyBottles([FromRoute] int id, [FromBody] BottlePutDTO bottletoput)
+        public async Task<IActionResult> ModifyBottles([FromRoute] int id, [FromBody] BottlePutDTO bottletoput)
         {
             if (id <= 0 || id != bottletoput.Id)
             {
                 return BadRequest();
             }
+            /*
+             * Je ne dois pas pouvoir put une bottle si une existe déjà pour le drawerId et le drawerPosition sauf si c'est elle-même
+             * */
 
-            Bottle bottle = new Bottle();
+
+            if(IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(bottletoput)) 
+                {
+                
+                    return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
+                }
+
+                Bottle bottle = new Bottle();
             bottle.Id = bottletoput.Id;
             bottle.Color = bottletoput.Color;
             bottle.Name = bottletoput.Name;
@@ -105,10 +137,19 @@ namespace WineCellarHB2024.Controllers
             bottle.DrawerId = bottletoput.DrawerId;
             
 
-            this._bottleRepository.UpdateBottle(bottle);
+            await this._bottleRepository.UpdateBottleAsync(bottle);
 
 
             return NoContent();
+        }
+
+        private bool IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(BottlePutDTO bottletoput)
+        {
+
+            Bottle? bottle = this._bottleRepository.GetBottleByDrawerIdAndDrawerPosition(bottletoput.DrawerId, bottletoput.DrawerPosition);
+
+            return !((bottle != null) && (bottle.Id == bottletoput.Id));
+        
         }
 
         [HttpDelete("{id}")]

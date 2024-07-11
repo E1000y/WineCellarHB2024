@@ -17,10 +17,11 @@ namespace DAL.Interfaces
 
             public void CreateNewBottle(Bottle Bottle);
 
-            public void UpdateBottle(Bottle bottle);
+            public Task UpdateBottleAsync(Bottle bottle);
 
 
             public void DeleteBottle(int Id);
-        }
+            public Bottle? GetBottleByDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition);
+    }
     }
 
