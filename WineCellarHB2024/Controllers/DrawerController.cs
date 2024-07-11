@@ -43,7 +43,14 @@ namespace WineCellarHB2024.Controllers
         public IActionResult GetById(int id)
         {
 
-              return Ok(this._drawerRepository.GetById(id));
+            var drawer = this._drawerRepository.GetById(id);
+            DrawerGetDTO drawerGetDTO = new DrawerGetDTO();
+
+            drawerGetDTO.Id = drawer.Id;
+            drawerGetDTO.Number = drawer.Number;
+            drawerGetDTO.NbOfBottlesPerDrawer = drawer.NbOfBottlesPerDrawer;
+
+            return Ok(drawerGetDTO);
         }
 
         [HttpPost]
