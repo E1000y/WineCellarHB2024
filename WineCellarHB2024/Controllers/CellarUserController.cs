@@ -126,7 +126,7 @@ namespace WineCellarHB2024.Controllers
 
             CellarUser cellaruser = await _userRepository.GetByIdAsync(id);
 
-            _userRepository.Delete(id);
+            _userRepository.DeleteAsync(id);
             await _userRepository.DeleteAsync(id);
 
             return Ok(cellaruser);
