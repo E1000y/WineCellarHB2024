@@ -61,5 +61,18 @@ namespace WineCellarHB2024.Controllers
             return Created($"drawer/{drawer.Id}", drawer);
         }
 
+        [HttpPut("{id}")]
+
+        public IActionResult ModifyDrawer([FromRoute] int id, [FromBody] DrawerPutDTO drawerPutDTO)
+        {
+            if (drawerPutDTO == null)
+            {
+                return BadRequest();
+            }
+
+            Drawer drawer = new Drawer();
+
+            drawer.
+
     }
 }
