@@ -9,16 +9,16 @@ namespace DAL.Interfaces
 {
     public interface IUserRepository
     {
-        public List<CellarUser> GetAll();
+        public Task<List<CellarUser>> GetAllAsync();
 
 
-        public CellarUser GetById(int id);
+        public Task<CellarUser> GetByIdAsync(int id);
 
-        public void Create(CellarUser user);
+        public Task CreateAsync(CellarUser user);
 
-        public void Update(CellarUser user);
+        public Task UpdateAsync(CellarUser user);
 
 
-        public void Delete(int id);
+        public Task<CellarUser> DeleteAsync(int id);
     }
 }

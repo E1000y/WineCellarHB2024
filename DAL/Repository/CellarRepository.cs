@@ -39,14 +39,14 @@ namespace DAL.Repository
         public async Task CreateAsync(Cellar cellar)
         {
             _ct.Cellars.Add(cellar);
-           await  _ct.SaveChangesAsync();
+            await _ct.SaveChangesAsync();
         }
 
         public async Task<Cellar> DeleteAsync(int id)
         {
             var cellar = this._ct.Cellars.Find(id);
             _ct.Cellars.Remove(cellar);
-           await _ct.SaveChangesAsync();
+            await _ct.SaveChangesAsync();
             return cellar;
 
         }
