@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace DAL.Repository
         }
 
 
-        public List<Cellar> GetAll()
+        public async Task<List<Cellar>> GetAllAsync()
         {
-            return _ct.Cellars.ToList();
+            return await _ct.Cellars.ToListAsync();
         }
 
 

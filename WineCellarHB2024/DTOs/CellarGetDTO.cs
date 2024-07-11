@@ -14,7 +14,7 @@ namespace WineCellarHB2024.DTOs
         public int? Temperature { get; set; }
 
 
-        public int CellarUserId { get; set; }
+        public string CellarUserId { get; set; }
 
 
     }

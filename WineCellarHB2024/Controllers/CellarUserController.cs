@@ -50,7 +50,7 @@ namespace WineCellarHB2024.Controllers
 
         [HttpGet(("{id}"))]
 
-        public IActionResult GetUser(int id)
+        public IActionResult GetUser(string id)
         {
             var user = this._userRepository.GetById(id);
             UserGetDTO userGetDTO = new UserGetDTO();
@@ -92,9 +92,9 @@ namespace WineCellarHB2024.Controllers
 
         [HttpPut("{id}")]
 
-        public IActionResult ModifyUser([FromRoute] int id, [FromBody] UserPutDTO userpdto)
+        public IActionResult ModifyUser([FromRoute] string id, [FromBody] UserPutDTO userpdto)
         {
-            if (id <= 0 || id != userpdto.Id)
+            if (id == null || id != userpdto.Id)
             {
                 return BadRequest();
             }
@@ -117,9 +117,9 @@ namespace WineCellarHB2024.Controllers
 
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteUser([FromRoute] int id) {
+        public IActionResult DeleteUser([FromRoute] string id) {
 
-            if (id <= 0)
+            if (id == null)
             {
                 return BadRequest();
             }

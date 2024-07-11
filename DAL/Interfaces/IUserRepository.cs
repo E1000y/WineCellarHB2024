@@ -12,13 +12,13 @@ namespace DAL.Interfaces
         public List<CellarUser> GetAll();
 
 
-        public CellarUser GetById(int id);
+        public CellarUser GetById(string id);
 
         public void Create(CellarUser user);
 
         public void Update(CellarUser user);
 
 
-        public void Delete(int id);
+        public void Delete(string id);
     }
 }

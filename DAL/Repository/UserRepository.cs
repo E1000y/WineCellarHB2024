@@ -25,7 +25,7 @@ namespace DAL.Repository
         }
 
 
-        public CellarUser GetById(int id)
+        public CellarUser GetById(string id)
         {
             return _ct.Users.FirstOrDefault(u => u.Id == id);
         }
@@ -42,7 +42,7 @@ namespace DAL.Repository
             _ct.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             _ct.Users.Remove(GetById(id));
             _ct.SaveChanges();

@@ -30,7 +30,14 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult GetBottles(int id)
         {
+            if (id <= 0)
+            {
+              return BadRequest();
+            } 
+            else
+    
             return Ok(this._bottleRepository.GetbottlebyID(id));
+ 
         }
 
         [HttpPost]
@@ -41,7 +48,7 @@ namespace WineCellarHB2024.Controllers
             {
                 return BadRequest();
             }
-
+            
             Bottle bottle = new Bottle();
             bottle.Color = bottletopost.Color;
             bottle.Name = bottletopost.Name;
@@ -65,15 +72,14 @@ namespace WineCellarHB2024.Controllers
  //           bottle.Drawer = bottletopost.Drawer
             bottle.DrawerId=bottletopost.DrawerId;
 
+        this._bottleRepository.CreateNewBottle(bottle);
 
-           this._bottleRepository.CreateNewBottle(bottle);
 
+        return Created ($"bottle/{bottle.Id}", bottle);
 
-            return Created($"bottle/{bottle.Id}", bottle);
+    }
 
-        }
-
-        [HttpPut("{id}")]
+    [HttpPut("{id}")]
 
         public IActionResult ModifyBottles([FromRoute] int id, [FromBody] BottlePutDTO bottletoput)
         {
@@ -115,7 +121,9 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult DeleteBottles([FromRoute] int id)
         {
-            if (id <= 0) return BadRequest();
+            if (id <= 0)
+               
+                return BadRequest();
 
             Bottle bottle = _bottleRepository.GetbottlebyID(id);
             _bottleRepository.DeleteBottle(id);
