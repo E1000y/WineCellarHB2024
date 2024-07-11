@@ -22,9 +22,9 @@ namespace WineCellarHB2024.Controllers
 
         [HttpGet]
 
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            List<CellarUser> users = this._userRepository.GetAll();
+            List<CellarUser> users = await this._userRepository.GetAllAsync();
             List<UserGetDTO> userGetDTOList = new List<UserGetDTO>();
 
             foreach (CellarUser user in users)
@@ -50,9 +50,9 @@ namespace WineCellarHB2024.Controllers
 
         [HttpGet(("{id}"))]
 
-        public IActionResult GetUser(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
-            var user = this._userRepository.GetById(id);
+            var user = await this._userRepository.GetByIdAsync(id);
             UserGetDTO userGetDTO = new UserGetDTO();
 
             userGetDTO.Id = user.Id;
@@ -69,7 +69,7 @@ namespace WineCellarHB2024.Controllers
 
         [HttpPost]
 
-        public IActionResult CreateUser([FromBody] UserDTO userdto)
+        public async Task<IActionResult> CreateUser([FromBody] UserDTO userdto)
         {
 
 
@@ -83,7 +83,7 @@ namespace WineCellarHB2024.Controllers
             user.Address = userdto.Address;
 
 
-            this._userRepository.Create(user);
+            await this._userRepository.CreateAsync(user);
 
 
             return Created($"cellaruser/{user.Id}", user);
@@ -92,7 +92,7 @@ namespace WineCellarHB2024.Controllers
 
         [HttpPut("{id}")]
 
-        public IActionResult ModifyUser([FromRoute] int id, [FromBody] UserPutDTO userpdto)
+        public async Task<IActionResult> ModifyUser([FromRoute] int id, [FromBody] UserPutDTO userpdto)
         {
             if (id <= 0 || id != userpdto.Id)
             {
@@ -109,7 +109,7 @@ namespace WineCellarHB2024.Controllers
             user.PhoneNumber = userpdto.PhoneNumber;
             user.Address = userpdto.Address;
 
-            this._userRepository.Update(user);
+            await this._userRepository.UpdateAsync(user);
 
 
             return NoContent();
@@ -117,16 +117,17 @@ namespace WineCellarHB2024.Controllers
 
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteUser([FromRoute] int id) {
-
+        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        {
             if (id <= 0)
             {
                 return BadRequest();
             }
 
-            CellarUser cellaruser = _userRepository.GetById(id);
+            CellarUser cellaruser = await _userRepository.GetByIdAsync(id);
 
-            _userRepository.Delete(id);
+            _userRepository.DeleteAsync(id);
+            await _userRepository.DeleteAsync(id);
 
             return Ok(cellaruser);
         
