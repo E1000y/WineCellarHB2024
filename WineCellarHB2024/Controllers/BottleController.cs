@@ -115,11 +115,12 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult DeleteBottles([FromRoute] int id)
         {
+            if (id <= 0) return BadRequest();
 
-
+            Bottle bottle = _bottleRepository.GetbottlebyID(id);
             _bottleRepository.DeleteBottle(id);
 
-            return Ok();
+            return Ok(bottle);
 
         }
     }

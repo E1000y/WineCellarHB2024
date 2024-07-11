@@ -72,14 +72,35 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult ModifyDrawer([FromRoute] int id, [FromBody] DrawerPutDTO drawerPutDTO)
         {
-            if (drawerPutDTO == null)
+            if (drawerPutDTO == null || (drawerPutDTO.Id != id))
             {
                 return BadRequest();
             }
 
             Drawer drawer = new Drawer();
 
-            drawer.
+            drawer.Id = drawerPutDTO.Id;
+            drawer.Number = drawerPutDTO.Number;
+            drawer.NbOfBottlesPerDrawer = drawerPutDTO.NbOfBottlesPerDrawer;
+            drawer.CellarId = drawerPutDTO.CellarId;
 
+            this._drawerRepository.Create(drawer);
+
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id}")]
+
+       public IActionResult DeleteDrawer([FromRoute] int id) {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            Drawer drawer = this._drawerRepository.GetById(id);
+            this._drawerRepository.Delete(id);
+
+            return Ok(drawer);
     }
 }

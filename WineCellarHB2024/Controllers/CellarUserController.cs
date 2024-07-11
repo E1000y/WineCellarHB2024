@@ -118,11 +118,17 @@ namespace WineCellarHB2024.Controllers
         [HttpDelete("{id}")]
 
         public IActionResult DeleteUser([FromRoute] int id) {
-          
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            CellarUser cellaruser = _userRepository.GetById(id);
 
             _userRepository.Delete(id);
 
-            return Ok();
+            return Ok(cellaruser);
         
         }
     }
