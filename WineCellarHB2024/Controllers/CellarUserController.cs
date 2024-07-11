@@ -119,11 +119,16 @@ namespace WineCellarHB2024.Controllers
 
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
 
+            CellarUser cellaruser = _userRepository.GetById(id);
 
             await _userRepository.DeleteAsync(id);
 
-            return Ok();
+            return Ok(cellaruser);
 
         }
     }
