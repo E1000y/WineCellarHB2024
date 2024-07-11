@@ -27,7 +27,7 @@ namespace WineCellarHB2024.Controllers
 
             foreach (Drawer drawer in drawers)
             {
-                DrawerGetDTO drawerGetDTO  = new DrawerGetDTO();
+                DrawerGetDTO drawerGetDTO = new DrawerGetDTO();
 
                 drawerGetDTO.Id = drawer.Id;
                 drawerGetDTO.Number = drawer.Number;
@@ -58,6 +58,12 @@ namespace WineCellarHB2024.Controllers
         public IActionResult CreateDrawer([FromBody] DrawerPostDTO drawerPostDTO)
         {
             if (drawerPostDTO == null) { return BadRequest(); }
+
+            //faire en sorte que le drawer ne puisse pas avoir le même numéro qu'un autre drawer pour un même cellarId
+
+            //get dans le cellar, le drawer avec le cellarid
+
+           
 
             Drawer drawer = new Drawer();
             drawer.Number = drawerPostDTO.Number;
@@ -92,7 +98,8 @@ namespace WineCellarHB2024.Controllers
 
         [HttpDelete("{id}")]
 
-       public IActionResult DeleteDrawer([FromRoute] int id) {
+        public IActionResult DeleteDrawer([FromRoute] int id)
+        {
             if (id <= 0)
             {
                 return BadRequest();
@@ -102,5 +109,6 @@ namespace WineCellarHB2024.Controllers
             this._drawerRepository.Delete(id);
 
             return Ok(drawer);
+        }
     }
 }

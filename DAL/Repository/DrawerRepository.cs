@@ -23,6 +23,8 @@ namespace DAL.Repository
             return _ct.Drawers.ToList();
         }
 
+
+
         public Drawer GetById(int id)
         {
             return _ct.Drawers.FirstOrDefault(d => d.Id == id);

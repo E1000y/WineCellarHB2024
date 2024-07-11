@@ -114,7 +114,7 @@ namespace WineCellarHB2024.Controllers
 
             if (id <= 0)
                 return BadRequest();
-            Cellar cellar = cellarRepository.GetById(id)
+            Cellar cellar = cellarRepository.GetById(id);
             cellarRepository.Delete(id);
 
             return Ok(cellar);
