@@ -54,7 +54,10 @@ namespace DAL.Repository
             _ct.SaveChanges();
         }
 
-     
+        public Drawer? GetByCellarIdAndNumber(int cellarId, int number)
+        {
+            return _ct.Drawers?.FirstOrDefault(d => d.CellarId == cellarId && d.Number == number);
+        }
     }
 }
 

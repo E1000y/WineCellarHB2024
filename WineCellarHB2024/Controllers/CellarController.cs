@@ -114,7 +114,7 @@ namespace WineCellarHB2024.Controllers
 
             if (id <= 0)
                 return BadRequest();
-            Cellar cellar = cellarRepository.GetByIdAsync(id);
+            Cellar cellar = await cellarRepository.GetByIdAsync(id);
 
             await cellarRepository.DeleteAsync(id);
 

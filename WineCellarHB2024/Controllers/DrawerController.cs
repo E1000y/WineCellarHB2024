@@ -32,6 +32,7 @@ namespace WineCellarHB2024.Controllers
                 drawerGetDTO.Id = drawer.Id;
                 drawerGetDTO.Number = drawer.Number;
                 drawerGetDTO.NbOfBottlesPerDrawer = drawer.NbOfBottlesPerDrawer;
+                drawerGetDTO.CellarId = drawer.CellarId;
                 drawerGetDTOList.Add(drawerGetDTO);
 
             }
@@ -49,6 +50,7 @@ namespace WineCellarHB2024.Controllers
             drawerGetDTO.Id = drawer.Id;
             drawerGetDTO.Number = drawer.Number;
             drawerGetDTO.NbOfBottlesPerDrawer = drawer.NbOfBottlesPerDrawer;
+            drawerGetDTO.CellarId= drawer.CellarId;
 
             return Ok(drawerGetDTO);
         }
@@ -68,7 +70,7 @@ namespace WineCellarHB2024.Controllers
            
             // maintenant, vérifier qu'aucun drawer n'a le même numéro 
 
-            if(CheckNoDrawerHasSameNumberThanInDrawerPostDTO(drawerPostDTO, drawers)) { BadRequest("another drawer has the same number in this cellar"); };
+            if(CheckNoDrawerHasSameNumberThanInDrawerPostDTO(drawerPostDTO, drawers)) {return  BadRequest("another drawer has the same number in this cellar"); };
            
 
             Drawer drawer = new Drawer();
@@ -101,6 +103,15 @@ namespace WineCellarHB2024.Controllers
             {
                 return BadRequest();
             }
+            
+           
+            if(IsTrueWhenDrawerWithCellarIdAndNumberExists(drawerPutDTO))
+            {
+                return BadRequest("a drawer exists in this position");
+            };
+
+
+
 
             Drawer drawer = new Drawer();
 
@@ -113,6 +124,13 @@ namespace WineCellarHB2024.Controllers
 
             return NoContent();
 
+        }
+
+        private bool IsTrueWhenDrawerWithCellarIdAndNumberExists(DrawerPutDTO drawerPutDto)
+        {
+            Drawer drawer = this._drawerRepository.GetByCellarIdAndNumber(drawerPutDto.CellarId, drawerPutDto.Number);
+
+            return !((drawer != null)&& (drawerPutDto.Id != drawer.Id));
         }
 
         [HttpDelete("{id}")]
