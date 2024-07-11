@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -18,34 +19,34 @@ namespace DAL.Repository
         }
 
 
-        public List<Cellar> GetAll()
+        public async Task<List<Cellar>> GetAllAsync()
         {
-            return _ct.Cellars.ToList();
+            return await _ct.Cellars.ToListAsync();
         }
 
 
-        public Cellar GetById(int id)
+        public async Task<Cellar> GetByIdAsync(int id)
         {
-            return _ct.Cellars.FirstOrDefault(c => c.Id == id);
+            return await _ct.Cellars.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public void Update(Cellar cellar)
+        public async Task UpdateAsync(Cellar cellar)
         {
             _ct.Cellars.Update(cellar);
-            _ct.SaveChanges();
+            await _ct.SaveChangesAsync();
 
         }
-        public void Create(Cellar cellar)
+        public async Task CreateAsync(Cellar cellar)
         {
             _ct.Cellars.Add(cellar);
-            _ct.SaveChanges();
+           await  _ct.SaveChangesAsync();
         }
 
-        public Cellar Delete(int id)
+        public async Task<Cellar> DeleteAsync(int id)
         {
-            _ct.Cellars.Remove(GetById(id));
-            _ct.SaveChanges();
             var cellar = this._ct.Cellars.Find(id);
+            _ct.Cellars.Remove(cellar);
+           await _ct.SaveChangesAsync();
             return cellar;
 
         }

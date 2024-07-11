@@ -9,14 +9,14 @@ namespace DAL.Interfaces
 {
     public interface ICellarRepository
     {
-        public List<Cellar> GetAll();
+        public Task<List<Cellar>> GetAllAsync();
 
-        public Cellar GetById(int id);
+        public Task<Cellar> GetByIdAsync(int id);
 
-        public void Create(Cellar user);
+        public Task CreateAsync(Cellar user);
 
-        public void Update(Cellar user);
+        public Task UpdateAsync(Cellar user);
 
-        public Cellar Delete(int id);
+        public Task<Cellar> DeleteAsync(int id);
     }
 }
