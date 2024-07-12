@@ -22,8 +22,7 @@ using System.Threading.Tasks;
 
         public async Task<List<Bottle>> GetAllAsync()
         {
-            var bottlesinStock = _ct.Bottles;
-            return await bottlesinStock.ToListAsync();
+            return await _ct.Bottles.ToListAsync();
 
         }
         public async Task<Bottle> GetByIdAsync(int id)
@@ -31,8 +30,8 @@ using System.Threading.Tasks;
             return await _ct.Bottles.FirstOrDefaultAsync(c => c.Id == id);
         }
         
+        // public Bottle? GetbottlebyID(int Id) => _ct.Bottles.FirstOrDefault(u => u.Id == Id);
 
-        public Bottle? GetbottlebyID(int Id) => _ct.Bottles.FirstOrDefault(u => u.Id == Id);
         public async Task UpdateBottleAsync(Bottle bottle)
         {
 

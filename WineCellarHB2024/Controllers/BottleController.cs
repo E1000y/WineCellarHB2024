@@ -28,6 +28,7 @@ namespace WineCellarHB2024.Controllers
             foreach( Bottle b in bottle)
             {
                 BottleGetDTO bottleGetDTO = new BottleGetDTO();
+                bottleGetDTO.Id = b.Id;
                 bottleGetDTO.Color = b.Color;
                 bottleGetDTO.Name = b.Name;
                 bottleGetDTO.FullName = b.FullName;
@@ -49,6 +50,7 @@ namespace WineCellarHB2024.Controllers
                 bottleGetDTO.DrawerPosition = b.DrawerPosition;
                 //           bottleGetDTO.Drawer = b.Drawer
                 bottleGetDTO.DrawerId = b.DrawerId;
+               bottleGetDTOList.Add(bottleGetDTO);
 
             }
 
@@ -64,6 +66,7 @@ namespace WineCellarHB2024.Controllers
         {
             var b= await _bottleRepository.GetByIdAsync(id);
             BottleGetDTO bottleGetDTO = new BottleGetDTO();
+            bottleGetDTO.Id = b.Id;
             bottleGetDTO.Color = b.Color;
             bottleGetDTO.Name = b.Name;
             bottleGetDTO.FullName = b.FullName;
