@@ -1,17 +1,15 @@
 ﻿using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repository
+ namespace DAL.Repository
 {
-    public class BottleRepository : IBottleRepository
+     public class BottleRepository : IBottleRepository
     {
 
         private readonly CellarContext _ct;
@@ -22,12 +20,18 @@ namespace DAL.Repository
         }
 
 
-        public List<Bottle> GetAll()
+        public async Task<List<Bottle>> GetAllAsync()
         {
             var bottlesinStock = _ct.Bottles;
-            return bottlesinStock.ToList();
+            return await bottlesinStock.ToListAsync();
 
         }
+        public async Task<Bottle> GetByIdAsync(int id)
+        {
+            return await _ct.Bottles.FirstOrDefaultAsync(c => c.Id == id);
+        }
+        
+
         public Bottle? GetbottlebyID(int Id) => _ct.Bottles.FirstOrDefault(u => u.Id == Id);
         public async Task UpdateBottleAsync(Bottle bottle)
         {
@@ -55,23 +59,20 @@ namespace DAL.Repository
                .SetProperty(b => b.DrawerPosition, bottle.DrawerPosition)
                .SetProperty(b => b.DrawerId, bottle.DrawerId));
 
-
-
-
-     
-
         }
-        public void CreateNewBottle(Bottle bottle)
+        public async Task CreateNewBottleAsync(Bottle bottle)
         {
             _ct.Bottles.Add(bottle);
-            _ct.SaveChanges();
+            await _ct.SaveChangesAsync();
             
         }
 
-        public void DeleteBottle(int Id)
+        public async Task  DeleteBottleAsync(int Id)
         {
-            _ct.Bottles.Remove(GetbottlebyID(Id));
-            _ct.SaveChanges();
+            var id = _ct.Bottles.Find(Id);
+            _ct.Bottles.Remove(id);
+            await _ct.SaveChangesAsync();
+    
         }
 
         public Bottle? GetBottleByDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition)

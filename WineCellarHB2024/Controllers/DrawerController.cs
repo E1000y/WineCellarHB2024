@@ -11,11 +11,18 @@ namespace WineCellarHB2024.Controllers
     public class DrawerController(IDrawerRepository _drawerRepository, IDrawerBusiness drawerBusiness) : ControllerBase
     {
 
+        private readonly IDrawerRepository _drawerRepository;
+
+        public DrawerController(IDrawerRepository drawerrepo)
+        {
+            _drawerRepository = drawerrepo;
+        }
+
         [HttpGet]
 
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<Drawer> drawers = _drawerRepository.GetAll();
+            List<Drawer> drawers = await this._drawerRepository.GetAllAsync();
             List<DrawerGetDTO> drawerGetDTOList = new List<DrawerGetDTO>();
 
             foreach (Drawer drawer in drawers)
@@ -32,25 +39,31 @@ namespace WineCellarHB2024.Controllers
 
             return Ok(drawerGetDTOList);
         }
+        #endregion
 
+        // Région pour la récupération des tiroirs par  l'Id (aka Get All Drawers by Id)
+        #region
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
 
-            var drawer = _drawerRepository.GetById(id);
+            var drawer = await this._drawerRepository.GetByIdAsync(id);
             DrawerGetDTO drawerGetDTO = new DrawerGetDTO();
 
             drawerGetDTO.Id = drawer.Id;
             drawerGetDTO.Number = drawer.Number;
             drawerGetDTO.NbOfBottlesPerDrawer = drawer.NbOfBottlesPerDrawer;
-            drawerGetDTO.CellarId= drawer.CellarId;
+            drawerGetDTO.CellarId = drawer.CellarId;
 
             return Ok(drawerGetDTO);
         }
+        #endregion
 
+        //Région pour la création des tiroirs (aka Create Drawers)
+        #region
         [HttpPost]
 
-        public IActionResult CreateDrawer([FromBody] DrawerPostDTO drawerPostDTO)
+        public async Task<IActionResult> CreateDrawer([FromBody] DrawerPostDTO drawerPostDTO)
         {
             if (drawerPostDTO == null) { return BadRequest(); }
 
@@ -59,8 +72,8 @@ namespace WineCellarHB2024.Controllers
             //get dans le cellar, le drawer avec le cellarid
 
 
-            List<Drawer> drawers = _drawerRepository.GetByCellarId(drawerPostDTO.CellarId);
-           
+            List<Drawer> drawers = await this._drawerRepository.GetByCellarIdAsync(drawerPostDTO.CellarId);
+
             // maintenant, vérifier qu'aucun drawer n'a le même numéro 
 
             if(drawerBusiness.CheckNoDrawerHasSameNumberThanInDrawerPostDTO(drawerPostDTO, drawers)) {return  BadRequest("another drawer has the same number in this cellar"); };
@@ -71,15 +84,29 @@ namespace WineCellarHB2024.Controllers
             drawer.NbOfBottlesPerDrawer = drawerPostDTO.NbOfBottlesPerDrawer;
             drawer.CellarId = drawerPostDTO.CellarId;
 
-            _drawerRepository.Create(drawer);
+            await this._drawerRepository.CreateAsync(drawer);
             return Created($"drawer/{drawer.Id}", drawer);
         }
 
-       
+        private bool CheckNoDrawerHasSameNumberThanInDrawerPostDTO(DrawerPostDTO drawerPostDTO, List<Drawer> drawers)
+        {
+           bool flag = false;
+            foreach (Drawer drawer in drawers)
+            {
+                if (drawer.Number == drawerPostDTO.Number) { flag = true; break; }
+            }
+
+            return flag;
+            
+
+        }
+
+        // Région pour la modification des tiroirs ( aka ModifyDrawers)
+        #region
 
         [HttpPut("{id}")]
 
-        public IActionResult ModifyDrawer([FromRoute] int id, [FromBody] DrawerPutDTO drawerPutDTO)
+        public async Task<IActionResult> ModifyDrawer([FromRoute] int id, [FromBody] DrawerPutDTO drawerPutDTO)
         {
             if (drawerPutDTO == null || (drawerPutDTO.Id != id))
             {
@@ -102,26 +129,29 @@ namespace WineCellarHB2024.Controllers
             drawer.NbOfBottlesPerDrawer = drawerPutDTO.NbOfBottlesPerDrawer;
             drawer.CellarId = drawerPutDTO.CellarId;
 
-            _drawerRepository.Update(drawer);
+            await this._drawerRepository.UpdateAsync(drawer);
 
             return NoContent();
 
         }
 
        
+        //Région pour la suppression des tiroirs ( aka DeleteDrawers)
+        #region
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteDrawer([FromRoute] int id)
+        public async Task<IActionResult> DeleteDrawer([FromRoute] int id)
         {
             if (id <= 0)
             {
                 return BadRequest();
             }
 
-            Drawer drawer = _drawerRepository.GetById(id);
-            _drawerRepository.Delete(id);
+            Drawer drawer = this._drawerRepository.GetById(id);
+            this._drawerRepository.Delete(id);
 
             return Ok(drawer);
         }
+        #endregion
     }
 }

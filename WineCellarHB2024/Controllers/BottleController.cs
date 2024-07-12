@@ -14,23 +14,86 @@ namespace WineCellarHB2024.Controllers
 
         [HttpGet]
 
-        public IActionResult GetBottles()
+        public async Task< IActionResult> GetBottles()
         {
             return Ok(_bottleRepository.GetAll());
         }
+            List<Bottle> bottles = await _bottleRepository.GetAllAsync();
+            List<BottleGetDTO> bottleGetDTOList= new List<BottleGetDTO>();
+            foreach( Bottle b in bottles)
+            {
+                BottleGetDTO bottleGetDTO = new BottleGetDTO();
+                bottleGetDTO.Id = b.Id;
+                bottleGetDTO.Color = b.Color;
+                bottleGetDTO.Name = b.Name;
+                bottleGetDTO.FullName = b.FullName;
+                bottleGetDTO.VintageYear = b.VintageYear;
+                bottleGetDTO.YearsOfKeep = b.YearsOfKeep;
+                bottleGetDTO.DomainName = b.DomainName;
+                bottleGetDTO.PeakInDate = b.PeakInDate;
+                bottleGetDTO.PeakOutDate = b.PeakOutDate;
 
+                bottleGetDTO.GrapeVariety = b.GrapeVariety;
+                bottleGetDTO.Tava = b.Tava;
+                bottleGetDTO.Capacity = b.Capacity;
+                bottleGetDTO.WineMakerName = b.WineMakerName;
+                bottleGetDTO.VintageName = b.VintageName;
+                bottleGetDTO.Aroma = b.Aroma;
+                bottleGetDTO.Price = b.Price;
+                bottleGetDTO.PurchaseDate = b.PurchaseDate;
+                bottleGetDTO.RelatedMeals = b.RelatedMeals;
+                bottleGetDTO.DrawerPosition = b.DrawerPosition;
+                //           bottleGetDTO.Drawer = b.Drawer
+                bottleGetDTO.DrawerId = b.DrawerId;
+                bottleGetDTOList.Add(bottleGetDTO);
+            }
 
+            return Ok(bottleGetDTOList);
+        }
 
+        #endregion
+
+        // region pour gerer la récupération d'une bouteille par l'ID (aka Get Bottles)
+        #region
         [HttpGet(("{id}"))]
+        public async Task<IActionResult> GetBottles(int id)
+        {
+            var b= await _bottleRepository.GetByIdAsync(id);
+            BottleGetDTO bottleGetDTO = new BottleGetDTO();
+            bottleGetDTO.Id = b.Id;
+            bottleGetDTO.Color = b.Color;
+            bottleGetDTO.Name = b.Name;
+            bottleGetDTO.FullName = b.FullName;
+            bottleGetDTO.VintageYear = b.VintageYear;
+            bottleGetDTO.YearsOfKeep = b.YearsOfKeep;
+            bottleGetDTO.DomainName = b.DomainName;
+            bottleGetDTO.PeakInDate = b.PeakInDate;
+            bottleGetDTO.PeakOutDate = b.PeakOutDate;
+            bottleGetDTO.GrapeVariety = b.GrapeVariety;
+            bottleGetDTO.Tava = b.Tava;
+            bottleGetDTO.Capacity = b.Capacity;
+            bottleGetDTO.WineMakerName = b.WineMakerName;
+            bottleGetDTO.VintageName = b.VintageName;
+            bottleGetDTO.Aroma = b.Aroma;
+            bottleGetDTO.Price = b.Price;
+            bottleGetDTO.PurchaseDate = b.PurchaseDate;
+            bottleGetDTO.RelatedMeals = b.RelatedMeals;
+            bottleGetDTO.DrawerPosition = b.DrawerPosition;
+            //           bottleGetDTO.Drawer = b.Drawer
+            bottleGetDTO.DrawerId = b.DrawerId;
 
         public IActionResult GetBottles(int id)
         {
             return Ok(_bottleRepository.GetbottlebyID(id));
         }
+        #endregion
 
+
+        // region pour vérifier l'existence d'une bouteille et créer la nouvelle s'il n'existe pas.
+        #region 
         [HttpPost]
 
-        public IActionResult CreateBottles([FromBody] BottlePostDTO bottletopost)
+        public async Task<IActionResult> CreateBottles([FromBody] BottlePostDTO bottletopost)
         {
             if (bottletopost.DrawerId <= 0)
             {
@@ -48,10 +111,7 @@ namespace WineCellarHB2024.Controllers
             {
                 return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
             }
-
-
-
-
+           
             Bottle bottle = new Bottle();
             bottle.Color = bottletopost.Color;
             bottle.Name = bottletopost.Name;
@@ -61,7 +121,6 @@ namespace WineCellarHB2024.Controllers
             bottle.DomainName = bottletopost.DomainName;
             bottle.PeakInDate = bottletopost.PeakInDate;
             bottle.PeakOutDate = bottletopost.PeakOutDate;
-
             bottle.GrapeVariety =bottletopost.GrapeVariety;
             bottle.Tava =bottletopost.Tava;
             bottle.Capacity = bottletopost.Capacity;
@@ -76,15 +135,19 @@ namespace WineCellarHB2024.Controllers
             bottle.DrawerId=bottletopost.DrawerId;
 
 
-           _bottleRepository.CreateNewBottle(bottle);
+           await _bottleRepository.CreateNewBottleAsync(bottle);
 
 
             return Created($"bottle/{bottle.Id}", bottle);
-
+         
         }
 
      
 
+        #endregion
+
+        //region pour gerer la modification d'une bouteille ( aka Modify bottles)
+        #region
         [HttpPut("{id}")]
 
         public async Task<IActionResult> ModifyBottles([FromRoute] int id, [FromBody] BottlePutDTO bottletoput)
@@ -135,18 +198,23 @@ namespace WineCellarHB2024.Controllers
 
        
 
+        #endregion
+
+        //Region pour gérer la suppression des données
+        #region
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteBottles([FromRoute] int id)
+        public async Task<IActionResult> DeleteBottles([FromRoute] int id)
         {
             if (id <= 0) return BadRequest();
 
-            Bottle bottle = _bottleRepository.GetbottlebyID(id);
-            _bottleRepository.DeleteBottle(id);
+            Bottle bottle = await _bottleRepository.GetByIdAsync(id);
+            await _bottleRepository.DeleteBottleAsync(id);
 
             return Ok(bottle);
 
         }
+        #endregion
     }
 }
 
