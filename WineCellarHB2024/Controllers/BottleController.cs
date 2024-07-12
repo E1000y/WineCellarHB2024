@@ -107,7 +107,7 @@ namespace WineCellarHB2024.Controllers
              */
 
 
-            if (bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPosition(bottletopost.DrawerId, bottletopost.DrawerPosition))
+            if (await bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAsync(bottletopost.DrawerId, bottletopost.DrawerPosition))
             {
                 return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
             }
@@ -161,7 +161,7 @@ namespace WineCellarHB2024.Controllers
              * */
 
 
-            if (bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(bottletoput)) 
+            if (await bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItselfAsync(bottletoput)) 
                 {
                 
                     return BadRequest("There already is a bottle in this drawerId and drawerPosition.");

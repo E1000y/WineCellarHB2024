@@ -75,9 +75,9 @@ using System.Threading.Tasks;
     
         }
 
-        public Bottle? GetBottleByDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition)
+        public async Task<Bottle?> GetBottleByDrawerIdAndDrawerPositionAsync(int drawerId, int? drawerPosition)
         {
-           return _ct.Bottles.FirstOrDefault(b => b.DrawerId == drawerId && b.DrawerPosition == drawerPosition);
+           return await _ct.Bottles.FirstOrDefaultAsync(b => b.DrawerId == drawerId && b.DrawerPosition == drawerPosition);
         }
     }
 

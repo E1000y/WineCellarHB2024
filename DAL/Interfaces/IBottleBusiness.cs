@@ -10,9 +10,12 @@ namespace DAL.Interfaces
     public interface IBottleBusiness
     {
 
-        public bool IsBottleExistingForDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition);
+        public Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAsync(int drawerId, int? drawerPosition);
 
-        public bool IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(BottlePutDTO bottletoput);
+        public Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItselfAsync(BottlePutDTO bottletoput);
+
+
+
 
     }
 }
