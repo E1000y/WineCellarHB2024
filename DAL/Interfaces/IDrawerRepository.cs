@@ -10,18 +10,18 @@ namespace DAL.Interfaces
 {
     public interface IDrawerRepository
     {
-        public List<Drawer> GetAll();
+        public Task<List<Drawer>> GetAllAsync();
 
-        public Drawer GetById(int id);
-        public List<Drawer> GetByCellarId(int cellarId);
+        public Task<Drawer> GetByIdAsync(int id);
+        public Task<List<Drawer>> GetByCellarIdAsync(int cellarId);
 
-        public Drawer GetByCellarIdAndNumber(int cellarId, int number);
+        public Task<Drawer> GetByCellarIdAndNumberAsync(int cellarId, int number);
 
-        public void Create(Drawer drawer);
+        public Task CreateAsync(Drawer drawer);
 
-        public void Update(Drawer drawer);
+        public Task UpdateAsync(Drawer drawer);
 
-        public void Delete(int id);
+        public Task DeleteAsync(int id);
 
     }
 }

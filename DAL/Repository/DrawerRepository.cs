@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -18,45 +19,46 @@ namespace DAL.Repository
             _ct = ct;
             
         }
-        public List<Drawer> GetAll()
+        public async Task<List<Drawer>> GetAllAsync()
         {
-            return _ct.Drawers.ToList();
+            return await _ct.Drawers.ToListAsync();
         }
 
-        public List<Drawer> GetByCellarId(int cellarId) {
-          
-            
-            return _ct.Drawers?.Where(d => d.CellarId == cellarId).ToList(); 
-        }
-
-        public Drawer GetById(int id)
+        public async  Task<List<Drawer>> GetByCellarIdAsync(int cellarId) 
         {
-            return _ct.Drawers.FirstOrDefault(d => d.Id == id);
+           return await _ct.Drawers?.Where(d => d.CellarId == cellarId).ToListAsync(); 
         }
-        public void Update(Drawer drawer)
+
+        public async Task<Drawer> GetByIdAsync(int id)
         {
-            _ct.Drawers.Update(drawer);
-            _ct.SaveChanges();
-            
+            return await _ct.Drawers.FirstOrDefaultAsync(d => d.Id == id);
         }
-
-
-        public void Create(Drawer drawer)
+        public async Task UpdateAsync(Drawer drawer)
         {
             _ct.Drawers.Update(drawer);
-            _ct.SaveChanges();
+            await _ct.SaveChangesAsync();
+            
+        }
+
+
+        public async Task CreateAsync(Drawer drawer)
+        {
+            _ct.Drawers.Update(drawer);
+            await _ct.SaveChangesAsync();
         }
 
 
      
-        public void Delete(int id)
-        {_ct.Drawers.Remove(GetById(id));
-            _ct.SaveChanges();
+        public async Task DeleteAsync(int id)
+        {
+            var Id = _ct.Drawers.Find(id);
+            _ct.Drawers.Remove(Id);
+           await _ct.SaveChangesAsync();
         }
 
-        public Drawer? GetByCellarIdAndNumber(int cellarId, int number)
+        public async Task<Drawer>? GetByCellarIdAndNumberAsync(int cellarId, int number)
         {
-            return _ct.Drawers?.FirstOrDefault(d => d.CellarId == cellarId && d.Number == number);
+            return await _ct.Drawers?.FirstOrDefaultAsync(d => d.CellarId == cellarId && d.Number == number);
         }
     }
 }
