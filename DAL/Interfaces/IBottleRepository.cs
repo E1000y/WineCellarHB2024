@@ -10,18 +10,12 @@ namespace DAL.Interfaces
 {
     public interface IBottleRepository
     {
-            public List<Bottle> GetAll();
-
-
-            public Bottle GetbottlebyID(int id);
-
-            public void CreateNewBottle(Bottle Bottle);
-
-            public Task UpdateBottleAsync(Bottle bottle);
-
-
-            public void DeleteBottle(int Id);
-            public Bottle? GetBottleByDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition);
+        public Task<List<Bottle>> GetAllAsync();
+        public Task<Bottle> GetByIdAsync(int id);
+        public Task CreateNewBottleAsync(Bottle Bottle);
+        public Task UpdateBottleAsync(Bottle bottle);
+        public Task DeleteBottleAsync(int id);
+        public Bottle? GetBottleByDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition);
     }
-    }
+}
 
