@@ -54,18 +54,11 @@ namespace DAL.Repository
                .SetProperty(b => b.RelatedMeals, bottle.RelatedMeals)
                .SetProperty(b => b.DrawerPosition, bottle.DrawerPosition)
                .SetProperty(b => b.DrawerId, bottle.DrawerId));
-
-
-
-
-     
-
         }
         public void CreateNewBottle(Bottle bottle)
         {
             _ct.Bottles.Add(bottle);
             _ct.SaveChanges();
-            
         }
 
         public void DeleteBottle(int Id)
