@@ -31,24 +31,29 @@ namespace DAL.Repository
             return await _ct.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task UpdateAsync(CellarUser user)
-        {
-            _ct.Users.Update(user);
-            await _ct.SaveChangesAsync();
-
-        }
         public async Task CreateAsync(CellarUser user)
         {
             _ct.Users.Add(user);
             await _ct.SaveChangesAsync();
         }
 
-        public async Task<CellarUser> DeleteAsync(int id)
+        public async Task UpdateAsync(CellarUser user)
         {
-            var user = this._ct.Users.Find(id);
-            _ct.Users.Remove(user);
+            await _ct.Users.Where(u => u.Id == user.Id).ExecuteUpdateAsync(
+                updates => updates.
+                SetProperty(u => u.FirstName, user.FirstName).
+                      SetProperty(u => u.LastName, user.LastName).
+                      SetProperty(u => u.BirthDate, user.BirthDate).
+                      SetProperty(u => u.Email, user.Email).
+                      SetProperty(u => u.Password, user.Password).
+                      SetProperty(u => u.PhoneNumber, user.PhoneNumber).
+                      SetProperty(u => u.Address, user.Address));
             await _ct.SaveChangesAsync();
-            return user;
+        }
+        public async Task DeleteAsync(int id)
+        {
+            await _ct.Users.Where(u => u.Id == id).ExecuteDeleteAsync();
+            await _ct.SaveChangesAsync();
         }
 
     }
