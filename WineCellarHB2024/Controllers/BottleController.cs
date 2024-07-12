@@ -1,27 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using WineCellarHB2024.DTOs;
+using Models.DTOs;
 using DAL.Interfaces;
 
 namespace WineCellarHB2024.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BottleController : ControllerBase
+    public class BottleController(IBottleRepository _bottleRepository,IBottleBusiness bottlebusiness) : ControllerBase
     {
-        private readonly IBottleRepository _bottleRepository;
-
-        public BottleController(IBottleRepository bottlerepository)
-        {
-            _bottleRepository = bottlerepository;
-        }
+       
 
         [HttpGet]
 
         public IActionResult GetBottles()
         {
-            return Ok(this._bottleRepository.GetAll());
+            return Ok(_bottleRepository.GetAll());
         }
 
 
@@ -30,7 +25,7 @@ namespace WineCellarHB2024.Controllers
 
         public IActionResult GetBottles(int id)
         {
-            return Ok(this._bottleRepository.GetbottlebyID(id));
+            return Ok(_bottleRepository.GetbottlebyID(id));
         }
 
         [HttpPost]
@@ -49,7 +44,7 @@ namespace WineCellarHB2024.Controllers
              */
 
 
-            if (IsBottleExistingForDrawerIdAndDrawerPosition(bottletopost.DrawerId, bottletopost.DrawerPosition))
+            if (bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPosition(bottletopost.DrawerId, bottletopost.DrawerPosition))
             {
                 return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
             }
@@ -81,19 +76,14 @@ namespace WineCellarHB2024.Controllers
             bottle.DrawerId=bottletopost.DrawerId;
 
 
-           this._bottleRepository.CreateNewBottle(bottle);
+           _bottleRepository.CreateNewBottle(bottle);
 
 
             return Created($"bottle/{bottle.Id}", bottle);
 
         }
 
-        private bool IsBottleExistingForDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition)
-        {
-            Bottle? bottle = this._bottleRepository.GetBottleByDrawerIdAndDrawerPosition(drawerId, drawerPosition);
-
-           return bottle != null;
-        }
+     
 
         [HttpPut("{id}")]
 
@@ -108,7 +98,7 @@ namespace WineCellarHB2024.Controllers
              * */
 
 
-            if(IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(bottletoput)) 
+            if (bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(bottletoput)) 
                 {
                 
                     return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
@@ -137,20 +127,13 @@ namespace WineCellarHB2024.Controllers
             bottle.DrawerId = bottletoput.DrawerId;
             
 
-            await this._bottleRepository.UpdateBottleAsync(bottle);
+            await _bottleRepository.UpdateBottleAsync(bottle);
 
 
             return NoContent();
         }
 
-        private bool IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(BottlePutDTO bottletoput)
-        {
-
-            Bottle? bottle = this._bottleRepository.GetBottleByDrawerIdAndDrawerPosition(bottletoput.DrawerId, bottletoput.DrawerPosition);
-
-            return !((bottle != null) && (bottle.Id == bottletoput.Id));
-        
-        }
+       
 
         [HttpDelete("{id}")]
 

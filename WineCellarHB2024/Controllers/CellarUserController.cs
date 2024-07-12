@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using WineCellarHB2024.DTOs;
+using Models.DTOs;
 
 namespace WineCellarHB2024.Controllers
 {

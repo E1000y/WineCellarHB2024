@@ -1,4 +1,5 @@
 using DAL;
+using DAL.Business;
 using DAL.Interfaces;
 using DAL.Repository;
 
@@ -15,6 +16,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBottleRepository, BottleRepository>();
 builder.Services.AddScoped<ICellarRepository, CellarRepository>();
 builder.Services.AddScoped<IDrawerRepository, DrawerRepository>();
+builder.Services.AddScoped<IBottleBusiness, BottleBusiness>();  
 
 var app = builder.Build();
 

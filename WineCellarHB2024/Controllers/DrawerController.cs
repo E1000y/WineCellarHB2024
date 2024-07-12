@@ -1,7 +1,7 @@
 ﻿using DAL.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WineCellarHB2024.DTOs;
+using Models.DTOs;
 using Models;
 
 namespace WineCellarHB2024.Controllers

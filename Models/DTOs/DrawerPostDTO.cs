@@ -1,6 +1,6 @@
 ﻿using Models;
 
-namespace WineCellarHB2024.DTOs
+namespace Models.DTOs
 {
     public class DrawerPostDTO
     {
