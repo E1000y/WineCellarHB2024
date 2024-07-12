@@ -24,13 +24,16 @@ namespace DAL.Business
             return flag;
         }
 
-        public bool IsTrueWhenDrawerWithCellarIdAndNumberExists(DrawerPutDTO drawerPutDto)
+        public async Task<bool> IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(DrawerPutDTO drawerPutDto)
         {
-            Drawer drawer = _drawerRepository.GetByCellarIdAndNumber(drawerPutDto.CellarId, drawerPutDto.Number);
+            Drawer drawer = await _drawerRepository.GetByCellarIdAndNumberAsync(drawerPutDto.CellarId, drawerPutDto.Number);
 
             return ((drawer != null) || (drawerPutDto.Id != drawer.Id));
         }
 
-       
+        bool IDrawerBusiness.IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(DrawerPutDTO drawerPutDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

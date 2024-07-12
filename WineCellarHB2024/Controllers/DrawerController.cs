@@ -11,18 +11,13 @@ namespace WineCellarHB2024.Controllers
     public class DrawerController(IDrawerRepository _drawerRepository, IDrawerBusiness drawerBusiness) : ControllerBase
     {
 
-        private readonly IDrawerRepository _drawerRepository;
 
-        public DrawerController(IDrawerRepository drawerrepo)
-        {
-            _drawerRepository = drawerrepo;
-        }
 
         [HttpGet]
 
         public async Task<IActionResult> GetAll()
         {
-            List<Drawer> drawers = await this._drawerRepository.GetAllAsync();
+            List<Drawer> drawers = await _drawerRepository.GetAllAsync();
             List<DrawerGetDTO> drawerGetDTOList = new List<DrawerGetDTO>();
 
             foreach (Drawer drawer in drawers)
@@ -39,15 +34,15 @@ namespace WineCellarHB2024.Controllers
 
             return Ok(drawerGetDTOList);
         }
-        #endregion
+  
 
         // Région pour la récupération des tiroirs par  l'Id (aka Get All Drawers by Id)
-        #region
+ 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
 
-            var drawer = await this._drawerRepository.GetByIdAsync(id);
+            var drawer = await _drawerRepository.GetByIdAsync(id);
             DrawerGetDTO drawerGetDTO = new DrawerGetDTO();
 
             drawerGetDTO.Id = drawer.Id;
@@ -57,10 +52,10 @@ namespace WineCellarHB2024.Controllers
 
             return Ok(drawerGetDTO);
         }
-        #endregion
+
 
         //Région pour la création des tiroirs (aka Create Drawers)
-        #region
+
         [HttpPost]
 
         public async Task<IActionResult> CreateDrawer([FromBody] DrawerPostDTO drawerPostDTO)
@@ -72,7 +67,7 @@ namespace WineCellarHB2024.Controllers
             //get dans le cellar, le drawer avec le cellarid
 
 
-            List<Drawer> drawers = await this._drawerRepository.GetByCellarIdAsync(drawerPostDTO.CellarId);
+            List<Drawer> drawers = await _drawerRepository.GetByCellarIdAsync(drawerPostDTO.CellarId);
 
             // maintenant, vérifier qu'aucun drawer n'a le même numéro 
 
@@ -84,7 +79,7 @@ namespace WineCellarHB2024.Controllers
             drawer.NbOfBottlesPerDrawer = drawerPostDTO.NbOfBottlesPerDrawer;
             drawer.CellarId = drawerPostDTO.CellarId;
 
-            await this._drawerRepository.CreateAsync(drawer);
+            await _drawerRepository.CreateAsync(drawer);
             return Created($"drawer/{drawer.Id}", drawer);
         }
 
@@ -102,7 +97,7 @@ namespace WineCellarHB2024.Controllers
         }
 
         // Région pour la modification des tiroirs ( aka ModifyDrawers)
-        #region
+ 
 
         [HttpPut("{id}")]
 
@@ -114,7 +109,7 @@ namespace WineCellarHB2024.Controllers
             }
             
            
-            if(!drawerBusiness.IsTrueWhenDrawerWithCellarIdAndNumberExists(drawerPutDTO))
+            if(!drawerBusiness.IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(drawerPutDTO))
             {
                 return BadRequest("a drawer exists in this position");
             };
@@ -129,7 +124,7 @@ namespace WineCellarHB2024.Controllers
             drawer.NbOfBottlesPerDrawer = drawerPutDTO.NbOfBottlesPerDrawer;
             drawer.CellarId = drawerPutDTO.CellarId;
 
-            await this._drawerRepository.UpdateAsync(drawer);
+            await _drawerRepository.UpdateAsync(drawer);
 
             return NoContent();
 
@@ -137,7 +132,7 @@ namespace WineCellarHB2024.Controllers
 
        
         //Région pour la suppression des tiroirs ( aka DeleteDrawers)
-        #region
+
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteDrawer([FromRoute] int id)
@@ -147,11 +142,11 @@ namespace WineCellarHB2024.Controllers
                 return BadRequest();
             }
 
-            Drawer drawer = this._drawerRepository.GetById(id);
-            this._drawerRepository.Delete(id);
+            Drawer drawer = await _drawerRepository.GetByIdAsync(id);
+           await _drawerRepository.DeleteAsync(id);
 
             return Ok(drawer);
         }
-        #endregion
+
     }
 }

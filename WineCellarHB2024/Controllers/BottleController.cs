@@ -16,8 +16,8 @@ namespace WineCellarHB2024.Controllers
 
         public async Task< IActionResult> GetBottles()
         {
-            return Ok(_bottleRepository.GetAll());
-        }
+            return Ok(_bottleRepository.GetAllAsync());
+        
             List<Bottle> bottles = await _bottleRepository.GetAllAsync();
             List<BottleGetDTO> bottleGetDTOList= new List<BottleGetDTO>();
             foreach( Bottle b in bottles)
@@ -51,14 +51,14 @@ namespace WineCellarHB2024.Controllers
             return Ok(bottleGetDTOList);
         }
 
-        #endregion
+
 
         // region pour gerer la récupération d'une bouteille par l'ID (aka Get Bottles)
         #region
         [HttpGet(("{id}"))]
-        public async Task<IActionResult> GetBottles(int id)
+        public async Task<IActionResult> GetBottlesAsync(int id)
         {
-            var b= await _bottleRepository.GetByIdAsync(id);
+            var b = await _bottleRepository.GetByIdAsync(id);
             BottleGetDTO bottleGetDTO = new BottleGetDTO();
             bottleGetDTO.Id = b.Id;
             bottleGetDTO.Color = b.Color;
@@ -82,10 +82,10 @@ namespace WineCellarHB2024.Controllers
             //           bottleGetDTO.Drawer = b.Drawer
             bottleGetDTO.DrawerId = b.DrawerId;
 
-        public IActionResult GetBottles(int id)
-        {
-            return Ok(_bottleRepository.GetbottlebyID(id));
+            return Ok(bottleGetDTO);
         }
+
+     
         #endregion
 
 
