@@ -15,7 +15,8 @@ namespace DAL.Interfaces
         public Task CreateNewBottleAsync(Bottle Bottle);
         public Task UpdateBottleAsync(Bottle bottle);
         public Task DeleteBottleAsync(int id);
-        public Bottle? GetBottleByDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition);
+        public Task<Bottle?> GetBottleByDrawerIdAndDrawerPositionAsync(int drawerId, int? drawerPosition);
+
     }
 }
 

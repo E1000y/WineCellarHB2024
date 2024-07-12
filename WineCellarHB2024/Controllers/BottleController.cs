@@ -16,6 +16,8 @@ namespace WineCellarHB2024.Controllers
 
         public async Task< IActionResult> GetBottles()
         {
+            return Ok(_bottleRepository.GetAllAsync());
+        
             List<Bottle> bottles = await _bottleRepository.GetAllAsync();
             List<BottleGetDTO> bottleGetDTOList= new List<BottleGetDTO>();
             foreach( Bottle b in bottles)
@@ -50,12 +52,12 @@ namespace WineCellarHB2024.Controllers
             return Ok(bottleGetDTOList);
         }
 
-        #endregion
+
 
         // region pour gerer la récupération d'une bouteille par l'ID (aka Get Bottles)
         #region
         [HttpGet(("{id}"))]
-        public async Task<IActionResult> GetBottles(int id)
+        public async Task<IActionResult> GetBottlesAsync(int id)
         {
             var b= await _bottleRepository.GetByIdAsync(id);
             BottleGetDTO bottleGetDTO = new BottleGetDTO();
@@ -83,6 +85,8 @@ namespace WineCellarHB2024.Controllers
 
             return Ok(bottleGetDTO);
         }
+
+     
         #endregion
 
 
@@ -104,8 +108,8 @@ namespace WineCellarHB2024.Controllers
              */
 
 
-            if (IsBottleExistingForDrawerIdAndDrawerPosition(bottletopost.DrawerId, bottletopost.DrawerPosition))
-            {     
+            if (await bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAsync(bottletopost.DrawerId, bottletopost.DrawerPosition))
+            {
                 return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
             }
            
@@ -138,13 +142,8 @@ namespace WineCellarHB2024.Controllers
             return Created($"bottle/{bottle.Id}", bottle);
          
         }
-   
-        private bool IsBottleExistingForDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition)
-        {
-            Bottle? bottle = this._bottleRepository.GetBottleByDrawerIdAndDrawerPosition(drawerId, drawerPosition);
 
-           return bottle != null;
-        }
+     
 
         #endregion
 
@@ -163,7 +162,7 @@ namespace WineCellarHB2024.Controllers
              * */
 
 
-            if (bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(bottletoput)) 
+            if (await bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItselfAsync(bottletoput)) 
                 {
                 
                     return BadRequest("There already is a bottle in this drawerId and drawerPosition.");

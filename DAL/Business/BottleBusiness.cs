@@ -13,17 +13,17 @@ namespace DAL.Business
 {
     public class BottleBusiness(IBottleRepository _bottleRepository) : IBottleBusiness
     {
-        public bool IsBottleExistingForDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition)
+        public async Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAsync(int drawerId, int? drawerPosition)
         {
-            Bottle? bottle = _bottleRepository.GetBottleByDrawerIdAndDrawerPosition(drawerId, drawerPosition);
+            Bottle? bottle = await _bottleRepository.GetBottleByDrawerIdAndDrawerPositionAsync(drawerId, drawerPosition);
 
             return bottle != null;
         }
 
-        public bool IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(BottlePutDTO bottletoput)
+        public async Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItselfAsync(BottlePutDTO bottletoput)
         {
 
-            Bottle? bottle = _bottleRepository.GetBottleByDrawerIdAndDrawerPosition(bottletoput.DrawerId, bottletoput.DrawerPosition);
+            Bottle? bottle = await _bottleRepository.GetBottleByDrawerIdAndDrawerPositionAsync(bottletoput.DrawerId, bottletoput.DrawerPosition);
 
             return !((bottle != null) && (bottle.Id == bottletoput.Id));
 
