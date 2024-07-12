@@ -43,12 +43,11 @@ namespace DAL.Repository
             await _ct.SaveChangesAsync();
         }
 
-        public async Task<CellarUser> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var user = this._ct.Users.Find(id);
             _ct.Users.Remove(user);
             await _ct.SaveChangesAsync();
-            return user;
         }
 
     }
