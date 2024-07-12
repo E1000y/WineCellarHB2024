@@ -12,7 +12,7 @@ namespace DAL.Interfaces
 
         public bool IsBottleExistingForDrawerIdAndDrawerPosition(int drawerId, int? drawerPosition);
 
-        public bool IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(BottlePutDTO bottletoput)
+        public bool IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItself(BottlePutDTO bottletoput);
 
     }
 }

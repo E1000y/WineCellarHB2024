@@ -8,21 +8,14 @@ namespace WineCellarHB2024.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class DrawerController : ControllerBase
+    public class DrawerController(IDrawerRepository _drawerRepository, IDrawerBusiness drawerBusiness) : ControllerBase
     {
-
-        private readonly IDrawerRepository _drawerRepository;
-
-        public DrawerController(IDrawerRepository drawerrepo)
-        {
-            _drawerRepository = drawerrepo;
-        }
 
         [HttpGet]
 
         public IActionResult GetAll()
         {
-            List<Drawer> drawers = this._drawerRepository.GetAll();
+            List<Drawer> drawers = _drawerRepository.GetAll();
             List<DrawerGetDTO> drawerGetDTOList = new List<DrawerGetDTO>();
 
             foreach (Drawer drawer in drawers)
@@ -44,7 +37,7 @@ namespace WineCellarHB2024.Controllers
         public IActionResult GetById(int id)
         {
 
-            var drawer = this._drawerRepository.GetById(id);
+            var drawer = _drawerRepository.GetById(id);
             DrawerGetDTO drawerGetDTO = new DrawerGetDTO();
 
             drawerGetDTO.Id = drawer.Id;
@@ -66,11 +59,11 @@ namespace WineCellarHB2024.Controllers
             //get dans le cellar, le drawer avec le cellarid
 
 
-            List<Drawer> drawers = this._drawerRepository.GetByCellarId(drawerPostDTO.CellarId);
+            List<Drawer> drawers = _drawerRepository.GetByCellarId(drawerPostDTO.CellarId);
            
             // maintenant, vérifier qu'aucun drawer n'a le même numéro 
 
-            if(CheckNoDrawerHasSameNumberThanInDrawerPostDTO(drawerPostDTO, drawers)) {return  BadRequest("another drawer has the same number in this cellar"); };
+            if(drawerBusiness.CheckNoDrawerHasSameNumberThanInDrawerPostDTO(drawerPostDTO, drawers)) {return  BadRequest("another drawer has the same number in this cellar"); };
            
 
             Drawer drawer = new Drawer();
@@ -78,22 +71,11 @@ namespace WineCellarHB2024.Controllers
             drawer.NbOfBottlesPerDrawer = drawerPostDTO.NbOfBottlesPerDrawer;
             drawer.CellarId = drawerPostDTO.CellarId;
 
-            this._drawerRepository.Create(drawer);
+            _drawerRepository.Create(drawer);
             return Created($"drawer/{drawer.Id}", drawer);
         }
 
-        private bool CheckNoDrawerHasSameNumberThanInDrawerPostDTO(DrawerPostDTO drawerPostDTO, List<Drawer> drawers)
-        {
-           bool flag = false;
-            foreach (Drawer drawer in drawers)
-            {
-                if (drawer.Number == drawerPostDTO.Number) { flag = true; break; }
-            }
-
-            return flag;
-            
-
-        }
+       
 
         [HttpPut("{id}")]
 
@@ -105,7 +87,7 @@ namespace WineCellarHB2024.Controllers
             }
             
            
-            if(IsTrueWhenDrawerWithCellarIdAndNumberExists(drawerPutDTO))
+            if(!drawerBusiness.IsTrueWhenDrawerWithCellarIdAndNumberExists(drawerPutDTO))
             {
                 return BadRequest("a drawer exists in this position");
             };
@@ -120,19 +102,13 @@ namespace WineCellarHB2024.Controllers
             drawer.NbOfBottlesPerDrawer = drawerPutDTO.NbOfBottlesPerDrawer;
             drawer.CellarId = drawerPutDTO.CellarId;
 
-            this._drawerRepository.Create(drawer);
+            _drawerRepository.Update(drawer);
 
             return NoContent();
 
         }
 
-        private bool IsTrueWhenDrawerWithCellarIdAndNumberExists(DrawerPutDTO drawerPutDto)
-        {
-            Drawer drawer = this._drawerRepository.GetByCellarIdAndNumber(drawerPutDto.CellarId, drawerPutDto.Number);
-
-            return !((drawer != null)&& (drawerPutDto.Id != drawer.Id));
-        }
-
+       
         [HttpDelete("{id}")]
 
         public IActionResult DeleteDrawer([FromRoute] int id)
@@ -142,8 +118,8 @@ namespace WineCellarHB2024.Controllers
                 return BadRequest();
             }
 
-            Drawer drawer = this._drawerRepository.GetById(id);
-            this._drawerRepository.Delete(id);
+            Drawer drawer = _drawerRepository.GetById(id);
+            _drawerRepository.Delete(id);
 
             return Ok(drawer);
         }
