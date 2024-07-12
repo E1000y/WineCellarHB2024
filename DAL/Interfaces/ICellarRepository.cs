@@ -17,6 +17,6 @@ namespace DAL.Interfaces
 
         public Task UpdateAsync(Cellar user);
 
-        public Task<Cellar> DeleteAsync(int id);
+        public Task DeleteAsync(int id);
     }
 }

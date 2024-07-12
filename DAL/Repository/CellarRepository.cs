@@ -42,12 +42,11 @@ namespace DAL.Repository
             await _ct.SaveChangesAsync();
         }
 
-        public async Task<Cellar> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var cellar = this._ct.Cellars.Find(id);
             _ct.Cellars.Remove(cellar);
             await _ct.SaveChangesAsync();
-            return cellar;
 
         }
 
