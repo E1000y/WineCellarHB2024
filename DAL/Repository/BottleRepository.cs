@@ -29,40 +29,38 @@ using System.Threading.Tasks;
         {
             return await _ct.Bottles.FirstOrDefaultAsync(c => c.Id == id);
         }
-        
+
         // public Bottle? GetbottlebyID(int Id) => _ct.Bottles.FirstOrDefault(u => u.Id == Id);
 
         public async Task UpdateBottleAsync(Bottle bottle)
         {
 
-           await _ct.Bottles
-               .Where(b => b.Id == bottle.Id)
-               .ExecuteUpdateAsync(setters => setters
-               .SetProperty(b => b.Color, bottle.Color)
-               .SetProperty(b => b.Name, bottle.Name)
-               .SetProperty(b => b.FullName, bottle.FullName)
-               .SetProperty(b => b.VintageYear, bottle.VintageYear)
-               .SetProperty(b => b.YearsOfKeep, bottle.YearsOfKeep)
-               .SetProperty(b => b.DomainName, bottle.DomainName)
-               .SetProperty(b => b.PeakInDate, bottle.PeakInDate)
-               .SetProperty(b => b.PeakOutDate, bottle.PeakOutDate)
-               .SetProperty(b => b.GrapeVariety, bottle.GrapeVariety)
-               .SetProperty(b => b.Tava, bottle.Tava)
-               .SetProperty(b => b.Capacity, bottle.Capacity)
-               .SetProperty(b => b.WineMakerName, bottle.WineMakerName)
-               .SetProperty(b => b.VintageName, bottle.VintageName)
-               .SetProperty(b => b.Aroma, bottle.Aroma)
-               .SetProperty(b => b.Price, bottle.Price)
-               .SetProperty(b => b.PurchaseDate, bottle.PurchaseDate)
-               .SetProperty(b => b.RelatedMeals, bottle.RelatedMeals)
-               .SetProperty(b => b.DrawerPosition, bottle.DrawerPosition)
-               .SetProperty(b => b.DrawerId, bottle.DrawerId));
+            await _ct.Bottles
+                .Where(b => b.Id == bottle.Id)
+                .ExecuteUpdateAsync(setters => setters
+                .SetProperty(b => b.Color, bottle.Color)
+                .SetProperty(b => b.Name, bottle.Name)
+                .SetProperty(b => b.FullName, bottle.FullName)
+                .SetProperty(b => b.VintageYear, bottle.VintageYear)
+                .SetProperty(b => b.YearsOfKeep, bottle.YearsOfKeep)
+                .SetProperty(b => b.DomainName, bottle.DomainName)
+                .SetProperty(b => b.PeakInDate, bottle.PeakInDate)
+                .SetProperty(b => b.PeakOutDate, bottle.PeakOutDate)
+                .SetProperty(b => b.GrapeVariety, bottle.GrapeVariety)
+                .SetProperty(b => b.Tava, bottle.Tava)
+                .SetProperty(b => b.Capacity, bottle.Capacity)
+                .SetProperty(b => b.WineMakerName, bottle.WineMakerName)
+                .SetProperty(b => b.VintageName, bottle.VintageName)
+                .SetProperty(b => b.Aroma, bottle.Aroma)
+                .SetProperty(b => b.Price, bottle.Price)
+                .SetProperty(b => b.PurchaseDate, bottle.PurchaseDate)
+                .SetProperty(b => b.RelatedMeals, bottle.RelatedMeals)
+                .SetProperty(b => b.DrawerPosition, bottle.DrawerPosition)
+                .SetProperty(b => b.DrawerId, bottle.DrawerId));
 
 
-
-
-     
             await _ct.SaveChangesAsync();
+        }
             
         public async Task CreateNewBottleAsync(Bottle bottle)
         {
