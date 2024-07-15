@@ -41,7 +41,6 @@ namespace Models
         public Drawer? Drawer { get; set; }
 
         public int DrawerId { get; set; }
-        public CellarUser? CellarUser { get; set; }
-        public string? CellarUserId { get; set; } // GUID
+ 
     }
 }
