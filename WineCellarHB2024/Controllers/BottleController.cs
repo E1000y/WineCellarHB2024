@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.DTOs;
 using DAL.Interfaces;
@@ -203,12 +202,13 @@ namespace WineCellarHB2024.Controllers
             return NoContent();
         }
 
-       
+
 
         #endregion
 
         //Region pour gérer la suppression des données
         #region
+        [Authorize]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteBottles([FromRoute] int id)
