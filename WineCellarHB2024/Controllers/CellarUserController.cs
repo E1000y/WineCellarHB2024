@@ -35,9 +35,7 @@ namespace WineCellarHB2024.Controllers
                 userGetDTO.FirstName = user.FirstName;
                 userGetDTO.LastName = user.LastName;
                 userGetDTO.BirthDate = user.BirthDate;
-                userGetDTO.Email = user.Email;
-                userGetDTO.Password = user.Password;
-                userGetDTO.PhoneNumber = user.PhoneNumber;
+
                 userGetDTO.Address = user.Address;
                 userGetDTOList.Add(userGetDTO);
 
@@ -59,9 +57,6 @@ namespace WineCellarHB2024.Controllers
             userGetDTO.FirstName = user.FirstName;
             userGetDTO.LastName = user.LastName;
             userGetDTO.BirthDate = user.BirthDate;
-            userGetDTO.Email = user.Email;
-            userGetDTO.Password = user.Password;
-            userGetDTO.PhoneNumber = user.PhoneNumber;
             userGetDTO.Address = user.Address;
 
             return Ok(userGetDTO);
@@ -69,7 +64,7 @@ namespace WineCellarHB2024.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> CreateUser([FromBody] UserDTO userdto)
+        public IActionResult CreateUser([FromBody] UserDTO userdto)
         {
 
 
@@ -83,7 +78,7 @@ namespace WineCellarHB2024.Controllers
             user.Address = userdto.Address;
 
 
-            await this._userRepository.CreateAsync(user);
+            this._userRepository.Create(user);
 
 
             return Created($"cellaruser/{user.Id}", user);
@@ -92,9 +87,9 @@ namespace WineCellarHB2024.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> ModifyUser([FromRoute] int id, [FromBody] UserPutDTO userpdto)
+        public IActionResult ModifyUser([FromRoute] int id, [FromBody] UserPutDTO userpdto)
         {
-            if (id <= 0 || id != userpdto.Id)
+            if (id == null || id != userpdto.Id)
             {
                 return BadRequest();
             }
@@ -104,9 +99,6 @@ namespace WineCellarHB2024.Controllers
             user.FirstName = userpdto.FirstName;
             user.LastName = userpdto.LastName;
             user.BirthDate = userpdto.BirthDate;
-            user.Email = userpdto.Email;
-            user.Password = userpdto.Password;
-            user.PhoneNumber = userpdto.PhoneNumber;
             user.Address = userpdto.Address;
 
             await this._userRepository.UpdateAsync(user);
@@ -117,8 +109,8 @@ namespace WineCellarHB2024.Controllers
 
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
-        {
+        public IActionResult DeleteUser([FromRoute] int id) {
+
             if (id <= 0)
             {
                 return BadRequest();

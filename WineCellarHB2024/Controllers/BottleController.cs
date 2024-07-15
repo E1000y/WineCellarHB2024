@@ -84,6 +84,7 @@ namespace WineCellarHB2024.Controllers
             bottleGetDTO.DrawerId = b.DrawerId;
 
             return Ok(bottleGetDTO);
+ 
         }
 
      
@@ -207,7 +208,9 @@ namespace WineCellarHB2024.Controllers
 
         public async Task<IActionResult> DeleteBottles([FromRoute] int id)
         {
-            if (id <= 0) return BadRequest();
+            if (id <= 0)
+               
+                return BadRequest();
 
             Bottle bottle = await _bottleRepository.GetByIdAsync(id);
             await _bottleRepository.DeleteBottleAsync(id);

@@ -1,5 +1,5 @@
 ﻿using DAL.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.DTOs;
@@ -8,16 +8,15 @@ namespace WineCellarHB2024.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CellarController : ControllerBase
+    public class CellarController(ICellarRepository cellarRepository, ILogger<CellarController> logger, UserManager<CellarUser> userManager) : ControllerBase
     {
-        private readonly ICellarRepository cellarRepository;
 
-        public CellarController(ICellarRepository cellarrepo)
-        {
-            cellarRepository = cellarrepo;
-        }
+        //private readonly ICellarRepository cellarRepository;
 
-
+        //public CellarController(ICellarRepository cellarrepo)
+       // {
+            //cellarRepository = cellarrepo;
+       // }
 
         [HttpGet]
 
@@ -52,12 +51,12 @@ namespace WineCellarHB2024.Controllers
             var cellar = await this.cellarRepository.GetByIdAsync(id);
             CellarGetDTO cellarGetDTO = new CellarGetDTO();
 
-                cellarGetDTO.Id = cellar.Id;
-                cellarGetDTO.Name = cellar.Name;
-                cellarGetDTO.Family = cellar.Family;
-                cellarGetDTO.Manufacturer = cellar.Manufacturer;
-                cellarGetDTO.Temperature = cellar.Temperature;
-                cellarGetDTO.CellarUserId = cellar.CellarUserId;
+            cellarGetDTO.Id = cellar.Id;
+            cellarGetDTO.Name = cellar.Name;
+            cellarGetDTO.Family = cellar.Family;
+            cellarGetDTO.Manufacturer = cellar.Manufacturer;
+            cellarGetDTO.Temperature = cellar.Temperature;
+            cellarGetDTO.CellarUserId = cellar.CellarUserId;
 
             return Ok(cellarGetDTO);
         }
