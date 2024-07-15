@@ -1,6 +1,9 @@
 using DAL;
 using DAL.Interfaces;
 using DAL.Repository;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,19 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBottleRepository, BottleRepository>();
 builder.Services.AddScoped<ICellarRepository, CellarRepository>();
 builder.Services.AddScoped<IDrawerRepository, DrawerRepository>();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<CellarUser>(
+    c =>
+    {
+        c.Password.RequiredLength = 2;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<CellarContext>();
+
+builder.Services.AddDbContext<CellarContext>(options =>
+{
+    options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CellarDB;Trusted_Connection=True");
+});
 
 var app = builder.Build();
 

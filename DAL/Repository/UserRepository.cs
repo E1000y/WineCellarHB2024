@@ -27,7 +27,7 @@ namespace DAL.Repository
 
         public CellarUser GetById(string id)
         {
-            return _ct.Users.FirstOrDefault(u => u.Id == id);
+            return _ct.Users.FirstOrDefault(u => u.Id.Equals(id));
         }
 
         public void Update(CellarUser user)

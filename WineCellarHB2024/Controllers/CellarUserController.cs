@@ -35,9 +35,7 @@ namespace WineCellarHB2024.Controllers
                 userGetDTO.FirstName = user.FirstName;
                 userGetDTO.LastName = user.LastName;
                 userGetDTO.BirthDate = user.BirthDate;
-                userGetDTO.Email = user.Email;
-                userGetDTO.Password = user.Password;
-                userGetDTO.PhoneNumber = user.PhoneNumber;
+
                 userGetDTO.Address = user.Address;
                 userGetDTOList.Add(userGetDTO);
 
@@ -59,36 +57,12 @@ namespace WineCellarHB2024.Controllers
             userGetDTO.FirstName = user.FirstName;
             userGetDTO.LastName = user.LastName;
             userGetDTO.BirthDate = user.BirthDate;
-            userGetDTO.Email = user.Email;
-            userGetDTO.Password = user.Password;
-            userGetDTO.PhoneNumber = user.PhoneNumber;
             userGetDTO.Address = user.Address;
 
             return Ok(userGetDTO);
         }
 
-        [HttpPost]
-
-        public IActionResult CreateUser([FromBody] UserDTO userdto)
-        {
-
-
-            CellarUser user = new CellarUser();
-            user.FirstName = userdto.FirstName;
-            user.LastName = userdto.LastName;
-            user.BirthDate = userdto.BirthDate;
-            user.Email = userdto.Email;
-            user.Password = userdto.Password;
-            user.PhoneNumber = userdto.PhoneNumber;
-            user.Address = userdto.Address;
-
-
-            this._userRepository.Create(user);
-
-
-            return Created($"cellaruser/{user.Id}", user);
-
-        }
+        
 
         [HttpPut("{id}")]
 
@@ -104,9 +78,6 @@ namespace WineCellarHB2024.Controllers
             user.FirstName = userpdto.FirstName;
             user.LastName = userpdto.LastName;
             user.BirthDate = userpdto.BirthDate;
-            user.Email = userpdto.Email;
-            user.Password = userpdto.Password;
-            user.PhoneNumber = userpdto.PhoneNumber;
             user.Address = userpdto.Address;
 
             this._userRepository.Update(user);
