@@ -48,7 +48,7 @@ namespace WineCellarHB2024.Controllers
 
         [HttpGet(("{id}"))]
 
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(string id)
         {
             var user = await this._userRepository.GetByIdAsync(id);
             UserGetDTO userGetDTO = new UserGetDTO();
@@ -62,34 +62,15 @@ namespace WineCellarHB2024.Controllers
             return Ok(userGetDTO);
         }
 
-        [HttpPost]
+    
 
-        public IActionResult CreateUser([FromBody] UserDTO userdto)
-        {
-
-
-            CellarUser user = new CellarUser();
-            user.FirstName = userdto.FirstName;
-            user.LastName = userdto.LastName;
-            user.BirthDate = userdto.BirthDate;
-            user.Email = userdto.Email;
-            user.Password = userdto.Password;
-            user.PhoneNumber = userdto.PhoneNumber;
-            user.Address = userdto.Address;
-
-
-            this._userRepository.Create(user);
-
-
-            return Created($"cellaruser/{user.Id}", user);
-
-        }
+        
 
         [HttpPut("{id}")]
 
-        public IActionResult ModifyUser([FromRoute] int id, [FromBody] UserPutDTO userpdto)
+        public async Task<IActionResult> ModifyUserAsync([FromRoute] string id, [FromBody] UserPutDTO userpdto)
         {
-            if (id == null || id != userpdto.Id)
+            if (id == null || !(id.Equals(userpdto.Id)))
             {
                 return BadRequest();
             }
@@ -109,9 +90,9 @@ namespace WineCellarHB2024.Controllers
 
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteUser([FromRoute] int id) {
+        public async Task<IActionResult> DeleteUser([FromRoute] string id) {
 
-            if (id <= 0)
+            if (id == null)
             {
                 return BadRequest();
             }

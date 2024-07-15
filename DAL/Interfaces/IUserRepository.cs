@@ -12,13 +12,13 @@ namespace DAL.Interfaces
         public Task<List<CellarUser>> GetAllAsync();
 
 
-        public Task<CellarUser> GetByIdAsync(int id);
+        public Task<CellarUser> GetByIdAsync(string id);
 
         public Task CreateAsync(CellarUser user);
 
         public Task UpdateAsync(CellarUser user);
 
 
-        public Task DeleteAsync(int id);
+        public Task DeleteAsync(string id);
     }
 }

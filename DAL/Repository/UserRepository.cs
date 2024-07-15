@@ -26,9 +26,9 @@ namespace DAL.Repository
         }
 
 
-        public async Task<CellarUser> GetByIdAsync(int id)
+        public async Task<CellarUser> GetByIdAsync(string id)
         {
-            return await _ct.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _ct.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
         }
 
         public async Task CreateAsync(CellarUser user)
@@ -45,14 +45,13 @@ namespace DAL.Repository
                       SetProperty(u => u.LastName, user.LastName).
                       SetProperty(u => u.BirthDate, user.BirthDate).
                       SetProperty(u => u.Email, user.Email).
-                      SetProperty(u => u.Password, user.Password).
                       SetProperty(u => u.PhoneNumber, user.PhoneNumber).
                       SetProperty(u => u.Address, user.Address));
             await _ct.SaveChangesAsync();
         }
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
-            await _ct.Users.Where(u => u.Id == id).ExecuteDeleteAsync();
+            await _ct.Users.Where(u => u.Id.Equals(id)).ExecuteDeleteAsync();
             await _ct.SaveChangesAsync();
         }
 

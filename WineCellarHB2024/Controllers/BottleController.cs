@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.DTOs;
 using DAL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WineCellarHB2024.Controllers
 {
+    
     [Route("[controller]")]
     [ApiController]
     public class BottleController(IBottleRepository _bottleRepository,IBottleBusiness bottlebusiness) : ControllerBase
     {
-       
 
+        [Authorize]
         [HttpGet]
 
         public async Task< IActionResult> GetBottles()
@@ -56,6 +58,7 @@ namespace WineCellarHB2024.Controllers
 
         // region pour gerer la récupération d'une bouteille par l'ID (aka Get Bottles)
         #region
+        [Authorize]
         [HttpGet(("{id}"))]
         public async Task<IActionResult> GetBottlesAsync(int id)
         {
@@ -87,12 +90,13 @@ namespace WineCellarHB2024.Controllers
  
         }
 
-     
+
         #endregion
 
 
         // region pour vérifier l'existence d'une bouteille et créer la nouvelle s'il n'existe pas.
         #region 
+        [Authorize]
         [HttpPost]
 
         public async Task<IActionResult> CreateBottles([FromBody] BottlePostDTO bottletopost)
@@ -144,12 +148,13 @@ namespace WineCellarHB2024.Controllers
          
         }
 
-     
+
 
         #endregion
 
         //region pour gerer la modification d'une bouteille ( aka Modify bottles)
         #region
+        [Authorize]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> ModifyBottles([FromRoute] int id, [FromBody] BottlePutDTO bottletoput)

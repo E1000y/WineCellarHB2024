@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -10,20 +11,13 @@ namespace WineCellarHB2024.Controllers
     [ApiController]
     public class CellarController(ICellarRepository cellarRepository, ILogger<CellarController> logger, UserManager<CellarUser> userManager) : ControllerBase
     {
-
-        //private readonly ICellarRepository cellarRepository;
-
-        //public CellarController(ICellarRepository cellarrepo)
-       // {
-            //cellarRepository = cellarrepo;
-       // }
-
+        [Authorize]
         [HttpGet]
 
         public async Task<IActionResult> GetCellars()
         {
 
-            List<Cellar> cellars = await this.cellarRepository.GetAllAsync();
+            List<Cellar> cellars = await cellarRepository.GetAllAsync();
             List<CellarGetDTO> cellarGetDTOList = new List<CellarGetDTO>();
 
             foreach (Cellar cellar in cellars)
@@ -43,12 +37,12 @@ namespace WineCellarHB2024.Controllers
         }
 
 
-
+        [Authorize]
         [HttpGet(("{id}"))]
 
         public async Task<IActionResult> GetCellar(int id)
         {
-            var cellar = await this.cellarRepository.GetByIdAsync(id);
+            var cellar = await cellarRepository.GetByIdAsync(id);
             CellarGetDTO cellarGetDTO = new CellarGetDTO();
 
             cellarGetDTO.Id = cellar.Id;
@@ -60,7 +54,7 @@ namespace WineCellarHB2024.Controllers
 
             return Ok(cellarGetDTO);
         }
-
+        [Authorize]
         [HttpPost]
 
         public async Task<IActionResult> CreateCellar([FromBody] CellarDTO cellardto)
@@ -75,13 +69,13 @@ namespace WineCellarHB2024.Controllers
             cellar.CellarUserId = cellardto.CellarUserId;
 
 
-            await this.cellarRepository.CreateAsync(cellar);
+            await cellarRepository.CreateAsync(cellar);
 
 
             return Created($"cellar/{cellar.Id}", cellar);
 
         }
-
+        [Authorize]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> ModifyCellar([FromRoute] int id, [FromBody] CellarPutDTO cellarpdto)
@@ -100,12 +94,12 @@ namespace WineCellarHB2024.Controllers
             cellar.CellarUserId = cellarpdto.CellarUserId;
 
 
-           await this.cellarRepository.UpdateAsync(cellar);
+           await cellarRepository.UpdateAsync(cellar);
 
 
             return NoContent();
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteCellar([FromRoute] int id)
