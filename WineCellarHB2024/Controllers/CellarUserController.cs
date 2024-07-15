@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace WineCellarHB2024.Controllers
 
 
         [HttpGet]
+        [Authorize]
 
         public async Task<IActionResult> GetUsers()
         {
@@ -45,7 +47,7 @@ namespace WineCellarHB2024.Controllers
         }
 
 
-
+        [Authorize]
         [HttpGet(("{id}"))]
 
         public async Task<IActionResult> GetUser(string id)
@@ -62,10 +64,10 @@ namespace WineCellarHB2024.Controllers
             return Ok(userGetDTO);
         }
 
-    
 
-        
 
+
+        [Authorize]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> ModifyUserAsync([FromRoute] string id, [FromBody] UserPutDTO userpdto)
@@ -76,7 +78,7 @@ namespace WineCellarHB2024.Controllers
             }
 
             CellarUser user = new CellarUser();
-            user.Id = id;
+            user.Id = userpdto.Id;
             user.FirstName = userpdto.FirstName;
             user.LastName = userpdto.LastName;
             user.BirthDate = userpdto.BirthDate;
@@ -87,7 +89,7 @@ namespace WineCellarHB2024.Controllers
 
             return NoContent();
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteUser([FromRoute] string id) {

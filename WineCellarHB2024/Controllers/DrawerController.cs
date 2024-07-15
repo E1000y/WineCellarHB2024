@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WineCellarHB2024.Controllers
 {
@@ -12,7 +13,7 @@ namespace WineCellarHB2024.Controllers
     {
 
 
-
+        [Authorize]
         [HttpGet]
 
         public async Task<IActionResult> GetAll()
@@ -34,10 +35,10 @@ namespace WineCellarHB2024.Controllers
 
             return Ok(drawerGetDTOList);
         }
-  
+
 
         // Région pour la récupération des tiroirs par  l'Id (aka Get All Drawers by Id)
- 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -55,7 +56,7 @@ namespace WineCellarHB2024.Controllers
 
 
         //Région pour la création des tiroirs (aka Create Drawers)
-
+        [Authorize]
         [HttpPost]
 
         public async Task<IActionResult> CreateDrawer([FromBody] DrawerPostDTO drawerPostDTO)
@@ -97,8 +98,8 @@ namespace WineCellarHB2024.Controllers
         }
 
         // Région pour la modification des tiroirs ( aka ModifyDrawers)
- 
 
+        [Authorize]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> ModifyDrawer([FromRoute] int id, [FromBody] DrawerPutDTO drawerPutDTO)
@@ -130,9 +131,9 @@ namespace WineCellarHB2024.Controllers
 
         }
 
-       
-        //Région pour la suppression des tiroirs ( aka DeleteDrawers)
 
+        //Région pour la suppression des tiroirs ( aka DeleteDrawers)
+        [Authorize]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteDrawer([FromRoute] int id)

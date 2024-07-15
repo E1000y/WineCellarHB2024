@@ -203,12 +203,13 @@ namespace WineCellarHB2024.Controllers
             return NoContent();
         }
 
-       
+
 
         #endregion
 
         //Region pour gérer la suppression des données
         #region
+        [Authorize]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteBottles([FromRoute] int id)
