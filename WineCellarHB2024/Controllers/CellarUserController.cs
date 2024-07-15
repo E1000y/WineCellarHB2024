@@ -1,7 +1,5 @@
 ﻿using DAL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.DTOs;
@@ -10,23 +8,15 @@ namespace WineCellarHB2024.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CellarUserController : ControllerBase
+    public class CellarUserController(IUserRepository _userRepository) : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-
-        public CellarUserController(IUserRepository userrepo)
-        {
-            _userRepository = userrepo;
-        }
-
-
 
         [HttpGet]
         [Authorize]
 
         public async Task<IActionResult> GetUsers()
         {
-            List<CellarUser> users = await this._userRepository.GetAllAsync();
+            List<CellarUser> users = await _userRepository.GetAllAsync();
             List<UserGetDTO> userGetDTOList = new List<UserGetDTO>();
 
             foreach (CellarUser user in users)
@@ -52,7 +42,7 @@ namespace WineCellarHB2024.Controllers
 
         public async Task<IActionResult> GetUser(string id)
         {
-            var user = await this._userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
             UserGetDTO userGetDTO = new UserGetDTO();
 
             userGetDTO.Id = user.Id;
@@ -84,7 +74,7 @@ namespace WineCellarHB2024.Controllers
             user.BirthDate = userpdto.BirthDate;
             user.Address = userpdto.Address;
 
-            await this._userRepository.UpdateAsync(user);
+            await _userRepository.UpdateAsync(user);
 
 
             return NoContent();
