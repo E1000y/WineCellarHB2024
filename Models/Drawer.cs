@@ -20,7 +20,6 @@ namespace Models
         public int CellarId { get; set; }
 
         public List<Bottle>? Bottles { get; set; }
-        public CellarUser? CellarUser { get; set; }
-        public string? CellarUserId { get; set; } // GUID
+
     }
 }
