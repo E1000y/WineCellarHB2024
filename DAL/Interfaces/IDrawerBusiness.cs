@@ -14,7 +14,7 @@ namespace DAL.Interfaces
 
         public bool CheckNoDrawerHasSameNumberThanInDrawerPostDTO(DrawerPostDTO drawerPostDTO, List<Drawer> drawers);
 
-        public bool IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(DrawerPutDTO drawerPutDto);
+        public Task<bool> IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(DrawerPutDTO drawerPutDto);
        
     }
 }

@@ -109,7 +109,7 @@ namespace WineCellarHB2024.Controllers
             }
             
            
-            if(!drawerBusiness.IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(drawerPutDTO))
+            if(!await drawerBusiness.IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(drawerPutDTO))
             {
                 return BadRequest("a drawer exists in this position");
             };

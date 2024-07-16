@@ -23,5 +23,7 @@ namespace DAL.Interfaces
 
         public Task DeleteAsync(int id);
 
+       
+
     }
 }

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineCellarHB2024", "WineCellarHB2024\WineCellarHB2024.csproj", "{099B04BB-27DB-4F16-A780-1030C66D2EA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WineCellarHB2024", "WineCellarHB2024\WineCellarHB2024.csproj", "{099B04BB-27DB-4F16-A780-1030C66D2EA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{8B2C75B3-5F74-4097-857E-42E59888F941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{8B2C75B3-5F74-4097-857E-42E59888F941}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{5AA35243-F039-48DD-8960-54FD83D69032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{5AA35243-F039-48DD-8960-54FD83D69032}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DALTests", "DALTests\DALTests.csproj", "{C09711CC-5ACA-4B64-B3E1-15F71EA21173}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5AA35243-F039-48DD-8960-54FD83D69032}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AA35243-F039-48DD-8960-54FD83D69032}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AA35243-F039-48DD-8960-54FD83D69032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C09711CC-5ACA-4B64-B3E1-15F71EA21173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C09711CC-5ACA-4B64-B3E1-15F71EA21173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C09711CC-5ACA-4B64-B3E1-15F71EA21173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C09711CC-5ACA-4B64-B3E1-15F71EA21173}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

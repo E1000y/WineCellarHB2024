@@ -31,9 +31,6 @@ namespace DAL.Business
             return ((drawer != null) || (drawerPutDto.Id != drawer.Id));
         }
 
-        bool IDrawerBusiness.IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(DrawerPutDTO drawerPutDto)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
