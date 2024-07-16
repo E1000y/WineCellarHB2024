@@ -17,7 +17,6 @@ namespace WineCellarHB2024.Controllers
 
         public async Task< IActionResult> GetBottles()
         {
-            return Ok(await _bottleRepository.GetAllAsync());
         
             List<Bottle> bottles = await _bottleRepository.GetAllAsync();
             List<BottleGetDTO> bottleGetDTOList= new List<BottleGetDTO>();
