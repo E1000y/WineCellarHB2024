@@ -17,7 +17,6 @@ namespace WineCellarHB2024.Controllers
 
         public async Task< IActionResult> GetBottles()
         {
-           // return Ok(await _bottleRepository.GetAllAsync());
         
             List<Bottle> bottles = await _bottleRepository.GetAllAsync();
             List<BottleGetDTO> bottleGetDTOList= new List<BottleGetDTO>();
@@ -224,6 +223,49 @@ namespace WineCellarHB2024.Controllers
 
         }
         #endregion
+        [Authorize]
+        [HttpPost("{id}")]
+        public async Task<IActionResult> DuplicateBottle([FromRoute] int id,[FromBody] BottleDupDTO bottletodupe)
+        {
+            if (id <= 0 || bottletodupe.DrawerId <= 0)
+            {
+                return BadRequest();
+            }
+            if (await bottlebusiness.IsBottleExistingForDrawerIdAndDrawerPositionAsync(bottletodupe.DrawerId, bottletodupe.DrawerPosition))
+            {
+                return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
+            }
+
+            var b = await _bottleRepository.GetByIdAsync(id);
+
+
+            Bottle bottle = new Bottle();
+            bottle.Color = b.Color;
+            bottle.Name = b.Name;
+            bottle.FullName = b.FullName;
+            bottle.VintageYear = b.VintageYear;
+            bottle.YearsOfKeep = b.YearsOfKeep;
+            bottle.DomainName = b.DomainName;
+            bottle.PeakInDate = b.PeakInDate;
+            bottle.PeakOutDate = b.PeakOutDate;
+            bottle.GrapeVariety = b.GrapeVariety;
+            bottle.Tava = b.Tava;
+            bottle.Capacity = b.Capacity;
+            bottle.WineMakerName = b.WineMakerName;
+            bottle.VintageName = b.VintageName;
+            bottle.Aroma = b.Aroma;
+            bottle.Price = b.Price;
+            bottle.PurchaseDate = b.PurchaseDate;
+            bottle.RelatedMeals = b.RelatedMeals;
+            bottle.DrawerPosition = bottletodupe.DrawerPosition;
+            bottle.DrawerId = bottletodupe.DrawerId;
+
+
+            await _bottleRepository.CreateNewBottleAsync(bottle);
+
+
+            return Created($"bottle/{bottle.Id}", bottle);
+        }
     }
 }
 
