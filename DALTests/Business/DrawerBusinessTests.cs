@@ -81,7 +81,7 @@ namespace DAL.Business.Tests
         }
 
         [TestMethod()]
-        public async Task IsTrueWhenDrawerWithCellarIdAndNumberExistsAsyncTest()
+        public async Task IsTrueWhenDrawerWithCellarIdAndNumberExistsAsyncTestTrue()
         {
             DrawerPutDTO drawerPutDTO = new DrawerPutDTO()
             {
@@ -102,6 +102,27 @@ namespace DAL.Business.Tests
             Assert.IsTrue(value);
         }
 
-     
+        [TestMethod()]
+        public async Task IsTrueWhenDrawerWithCellarIdAndNumberExistsAsyncTestFalse()
+        {
+            DrawerPutDTO drawerPutDTO = new DrawerPutDTO()
+            {
+                Id = 1,
+                Number = 5,
+                NbOfBottlesPerDrawer = 20,
+                CellarId = 1,
+
+            };
+            //Arrange
+            DrawerBusiness dbz = new DrawerBusiness(new MockDrawerRepository());
+
+
+            //Act
+            bool value = await dbz.IsTrueWhenDrawerWithCellarIdAndNumberExistsAsync(drawerPutDTO);
+
+            //Assert
+            Assert.IsFalse(value);
+        }
+
     }
 }

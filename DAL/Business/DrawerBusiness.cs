@@ -28,7 +28,12 @@ namespace DAL.Business
         {
             Drawer drawer = await _drawerRepository.GetByCellarIdAndNumberAsync(drawerPutDto.CellarId, drawerPutDto.Number);
 
-            return ((drawer != null) || (drawerPutDto.Id != drawer.Id));
+            if (drawer == null) { return false; }
+            else if(drawer.Id == drawerPutDto.Id) { return false; }
+            else { return true; }
+
+
+           // return ((drawer != null) || (drawerPutDto.Id != drawer.Id));
         }
 
       
