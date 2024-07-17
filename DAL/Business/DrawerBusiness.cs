@@ -29,7 +29,7 @@ namespace DAL.Business
             Drawer drawer = await _drawerRepository.GetByCellarIdAndNumberAsync(drawerPutDto.CellarId, drawerPutDto.Number);
 
             if (drawer == null) { return false; }
-            else if(drawer.Id == drawerPutDto.Id) { return false; }
+            else if(drawer.Id == drawerPutDto.Id) { return true; }
             else { return true; }
 
 
