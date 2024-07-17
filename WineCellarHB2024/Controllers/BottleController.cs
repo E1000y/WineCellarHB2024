@@ -115,7 +115,13 @@ namespace WineCellarHB2024.Controllers
             {
                 return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
             }
-           
+
+            if (await bottlebusiness.IsDrawerBigEnoughAsync(bottletopost))
+            {
+
+                return BadRequest("DrawerPosition invalid.");
+            }
+
             Bottle bottle = new Bottle();
             bottle.Color = bottletopost.Color;
             bottle.Name = bottletopost.Name;
@@ -138,11 +144,31 @@ namespace WineCellarHB2024.Controllers
  //           bottle.Drawer = bottletopost.Drawer
             bottle.DrawerId=bottletopost.DrawerId;
 
-
            await _bottleRepository.CreateNewBottleAsync(bottle);
 
+            BottlePostDTO bottlePostDTO = new BottlePostDTO();
+            bottlePostDTO.Color = bottle.Color;
+            bottlePostDTO.Name = bottle.Name;
+            bottlePostDTO.FullName = bottle.FullName;
+            bottlePostDTO.VintageYear = bottle.VintageYear;
+            bottlePostDTO.YearsOfKeep = bottle.YearsOfKeep;
+            bottlePostDTO.DomainName = bottle.DomainName;
+            bottlePostDTO.PeakInDate = bottle.PeakInDate;
+            bottlePostDTO.PeakOutDate = bottle.PeakOutDate;
+            bottlePostDTO.GrapeVariety = bottle.GrapeVariety;
+            bottlePostDTO.Tava = bottle.Tava;
+            bottlePostDTO.Capacity = bottle.Capacity;
+            bottlePostDTO.WineMakerName = bottle.WineMakerName;
+            bottlePostDTO.VintageName = bottle.VintageName;
+            bottlePostDTO.Aroma = bottle.Aroma;
+            bottlePostDTO.Price = bottle.Price;
+            bottlePostDTO.PurchaseDate = bottle.PurchaseDate;
+            bottlePostDTO.RelatedMeals = bottle.RelatedMeals;
+            bottlePostDTO.DrawerPosition = bottle.DrawerPosition;
+            bottlePostDTO.DrawerId = bottle.DrawerId;
 
-            return Created($"bottle/{bottle.Id}", bottle);
+
+            return Created($"bottle/{bottle.Id}", bottlePostDTO);
          
         }
 
@@ -172,7 +198,7 @@ namespace WineCellarHB2024.Controllers
                     return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
                 }
 
-            if (await bottlebusiness.IsDrawerBigEnough(bottletoput))
+            if (await bottlebusiness.IsDrawerBigEnoughAsync(bottletoput))
             {
 
                 return BadRequest("DrawerPosition invalid.");

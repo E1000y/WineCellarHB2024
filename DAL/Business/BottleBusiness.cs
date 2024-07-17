@@ -39,7 +39,7 @@ namespace DAL.Business
             //  return !((bottle != null) && (bottle.Id == bottletoput.Id));
 
         }
-        public async Task<bool> IsDrawerBigEnough(BottlePostDTO bottlePostDTO)
+        public async Task<bool> IsDrawerBigEnoughAsync(BottlePostDTO bottlePostDTO)
         {
             Bottle? bottle = await _bottleRepository.GetBottleByDrawerIdAndDrawerPositionAsync(bottlePostDTO.DrawerId, bottlePostDTO.DrawerPosition);
             Drawer? drawer = await drawerRepository.GetByIdAsync(bottlePostDTO.DrawerId);
