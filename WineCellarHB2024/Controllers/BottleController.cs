@@ -224,7 +224,7 @@ namespace WineCellarHB2024.Controllers
         }
         #endregion
         [Authorize]
-        [HttpPost("{id}")]
+        [HttpPost("DuplicateBottle/{id}")]
         public async Task<IActionResult> DuplicateBottle([FromRoute] int id,[FromBody] BottleDupDTO bottletodupe)
         {
             if (id <= 0 || bottletodupe.DrawerId <= 0)
