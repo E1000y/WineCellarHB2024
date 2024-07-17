@@ -11,7 +11,7 @@ using Models.DTOs;
 
 namespace DAL.Business
 {
-    public class BottleBusiness(IBottleRepository _bottleRepository) : IBottleBusiness
+    public class BottleBusiness(IBottleRepository _bottleRepository, IDrawerRepository drawerRepository) : IBottleBusiness
     {
         public async Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAsync(int drawerId, int? drawerPosition)
         {
@@ -32,12 +32,23 @@ namespace DAL.Business
             }
 
             return false;
-        
 
 
 
-        //  return !((bottle != null) && (bottle.Id == bottletoput.Id));
+
+            //  return !((bottle != null) && (bottle.Id == bottletoput.Id));
+
+        }
+        public async Task<bool> IsDrawerBigEnough(BottlePostDTO bottlePostDTO)
+        {
+            Bottle? bottle = await _bottleRepository.GetBottleByDrawerIdAndDrawerPositionAsync(bottlePostDTO.DrawerId, bottlePostDTO.DrawerPosition);
+            Drawer? drawer = await drawerRepository.GetByIdAsync(bottlePostDTO.DrawerId);
+            if (bottlePostDTO.DrawerPosition <= 0 || bottlePostDTO.DrawerPosition > drawer.NbOfBottlesPerDrawer)
+            {
+                return true;
+            }
+            return false;
+        }
 
     }
-}
 }

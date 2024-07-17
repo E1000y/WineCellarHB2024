@@ -14,7 +14,7 @@ namespace DAL.Interfaces
 
         public Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItselfAsync(BottlePutDTO bottletoput);
 
-
+        public Task<bool> IsDrawerBigEnough(BottlePostDTO bottlePostDTO);
 
 
     }

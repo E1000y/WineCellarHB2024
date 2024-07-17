@@ -172,7 +172,13 @@ namespace WineCellarHB2024.Controllers
                     return BadRequest("There already is a bottle in this drawerId and drawerPosition.");
                 }
 
-                Bottle bottle = new Bottle();
+            if (await bottlebusiness.IsDrawerBigEnough(bottletoput))
+            {
+
+                return BadRequest("DrawerPosition invalid.");
+            }
+
+            Bottle bottle = new Bottle();
             bottle.Id = bottletoput.Id;
             bottle.Color = bottletoput.Color;
             bottle.Name = bottletoput.Name;
