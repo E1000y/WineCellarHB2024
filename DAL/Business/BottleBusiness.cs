@@ -22,11 +22,22 @@ namespace DAL.Business
 
         public async Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItselfAsync(BottlePutDTO bottletoput)
         {
-
+            // Fetch the bottle based on DrawerId and DrawerPosition
             Bottle? bottle = await _bottleRepository.GetBottleByDrawerIdAndDrawerPositionAsync(bottletoput.DrawerId, bottletoput.DrawerPosition);
 
-            return !((bottle != null) && (bottle.Id == bottletoput.Id));
+            // Check if a bottle was found and if it's not the same as the one being put
+            if (bottle != null && bottle.Id != bottletoput.Id)
+            {
+                return true;
+            }
 
-        }
+            return false;
+        
+
+
+
+        //  return !((bottle != null) && (bottle.Id == bottletoput.Id));
+
     }
+}
 }
