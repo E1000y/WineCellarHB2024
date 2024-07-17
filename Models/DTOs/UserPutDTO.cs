@@ -2,7 +2,7 @@
 {
     public class UserPutDTO : UserDTO
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
 
     }
