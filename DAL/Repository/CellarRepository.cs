@@ -42,7 +42,8 @@ namespace DAL.Repository
                 SetProperty(c => c.Name, cellar.Name).
                       SetProperty(c => c.Family, cellar.Family ).
                       SetProperty(c => c.Manufacturer, cellar.Manufacturer).
-                      SetProperty(c => c.Temperature, cellar.Temperature));
+                      SetProperty(c => c.Temperature, cellar.Temperature).
+                      SetProperty(c => c.CellarUserId, cellar.CellarUserId));
             await _ct.SaveChangesAsync();
         }
         public async Task DeleteAsync(int id)
