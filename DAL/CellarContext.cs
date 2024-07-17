@@ -27,8 +27,9 @@ namespace DAL
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        { if(!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=CellarDB;Integrated Security=True");
+        {
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=CellarDB;Integrated Security=True");
             base.OnConfiguring(optionsBuilder);
 
         }
