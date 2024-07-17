@@ -1,4 +1,6 @@
-﻿using DAL.Interfaces;
+﻿using Azure;
+using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -18,34 +20,50 @@ namespace DAL.Repository
             _ct = ct;
         }
 
-        
-        public List<CellarUser> GetAll()
+
+        public async Task<List<CellarUser>> GetAllAsync()
         {
-            return _ct.Users.ToList() ;
+            return await _ct.Users.ToListAsync();
         }
 
 
-        public CellarUser GetById(string id)
+        public async Task<CellarUser> GetByIdAsync(string id)
         {
-            return _ct.Users.FirstOrDefault(u => u.Id == id);
+            return await _ct.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
         }
 
-        public void Update(CellarUser user)
-        {
-            _ct.Users.Update(user);
-            _ct.SaveChanges();
-
-        }
-        public void Create(CellarUser user)
+        public async Task CreateAsync(CellarUser user)
         {
             _ct.Users.Add(user);
-            _ct.SaveChanges();
+            await _ct.SaveChangesAsync();
         }
 
-        public void Delete(string id)
+        public async Task UpdateAsync(CellarUser user)
         {
-            _ct.Users.Remove(GetById(id));
-            _ct.SaveChanges();
+            await _ct.Users.Where(u => u.Id == user.Id).ExecuteUpdateAsync(
+                updates => updates.
+                SetProperty(u => u.FirstName, user.FirstName).
+                      SetProperty(u => u.LastName, user.LastName).
+                      SetProperty(u => u.BirthDate, user.BirthDate).
+                      SetProperty(u => u.Email, user.Email).
+                      SetProperty(u => u.PhoneNumber, user.PhoneNumber).
+                      SetProperty(u => u.Address, user.Address));
+            await _ct.SaveChangesAsync();
+        }
+
+        // recuperer l'age d'une personne
+        //public async Task<CellarUser?> GetDateonlyAsync(DateOnly dob)
+        //{
+        //    return await _ct.Users.FirstOrDefaultAsync(b => b.BirthDate == dob);
+        //}
+
+
+
+
+        public async Task DeleteAsync(string id)
+        {
+            await _ct.Users.Where(u => u.Id.Equals(id)).ExecuteDeleteAsync();
+            await _ct.SaveChangesAsync();
         }
 
     }
