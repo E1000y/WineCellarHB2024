@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.DTOs;
@@ -8,7 +9,7 @@ namespace WineCellarHB2024.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CellarUserController(IUserRepository _userRepository) : ControllerBase
+    public class CellarUserController(IUserRepository _userRepository, UserManager<CellarUser> _userManager) : ControllerBase
     {
 
         [HttpGet]
@@ -23,7 +24,7 @@ namespace WineCellarHB2024.Controllers
             {
                 UserGetDTO userGetDTO = new UserGetDTO();
 
-                userGetDTO.Id = user.Id;
+                //userGetDTO.Id = user.Id;
                 userGetDTO.FirstName = user.FirstName;
                 userGetDTO.LastName = user.LastName;
                 userGetDTO.BirthDate = user.BirthDate;
@@ -45,7 +46,7 @@ namespace WineCellarHB2024.Controllers
             var user = await _userRepository.GetByIdAsync(id);
             UserGetDTO userGetDTO = new UserGetDTO();
 
-            userGetDTO.Id = user.Id;
+            //userGetDTO.Id = user.Id;
             userGetDTO.FirstName = user.FirstName;
             userGetDTO.LastName = user.LastName;
             userGetDTO.BirthDate = user.BirthDate;
@@ -58,17 +59,13 @@ namespace WineCellarHB2024.Controllers
 
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut]
 
-        public async Task<IActionResult> ModifyUserAsync([FromRoute] string id, [FromBody] UserPutDTO userpdto)
+        public async Task<IActionResult> ModifyUser([FromBody] UserPutDTO userpdto)
         {
-            if (id == null || !(id.Equals(userpdto.Id)))
-            {
-                return BadRequest();
-            }
 
             CellarUser user = new CellarUser();
-            user.Id = userpdto.Id;
+            user.Id = _userManager.GetUserId(User);
             user.FirstName = userpdto.FirstName;
             user.LastName = userpdto.LastName;
             user.BirthDate = userpdto.BirthDate;
