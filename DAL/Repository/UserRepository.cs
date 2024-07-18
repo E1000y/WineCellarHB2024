@@ -54,6 +54,20 @@ namespace DAL.Repository
             await _ct.Users.Where(u => u.Id.Equals(id)).ExecuteDeleteAsync();
             await _ct.SaveChangesAsync();
         }
-
+        public async Task DeleteChainBotAsync(string id)
+        {
+            await _ct.Bottles.Include(d => d.Drawer)
+                .ThenInclude(c => c.Cellar)
+                .ThenInclude(u => u.User).Where(b => b.Drawer.Cellar.User.Id.Equals(id)).ExecuteDeleteAsync();
+        }
+        public async Task DeleteChainDrawAsync(string id)
+        {
+            await _ct.Drawers.Include(c => c.Cellar)
+                .ThenInclude(u => u.User).Where(d => d.Cellar.User.Id.Equals(id)).ExecuteDeleteAsync();
+        }
+        public async Task DeleteChainCelAsync(string id)
+        {
+            await _ct.Cellars.Include(u => u.User).Where(c => c.User.Id.Equals(id)).ExecuteDeleteAsync();
+        }
     }
 }
