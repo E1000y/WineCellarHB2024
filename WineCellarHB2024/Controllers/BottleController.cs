@@ -15,7 +15,7 @@ namespace WineCellarHB2024.Controllers
         [Authorize]
         [HttpGet]
 
-        public async Task< IActionResult> GetBottles()
+        public async Task<IActionResult> GetBottles()
         {
         
             List<Bottle> bottles = await _bottleRepository.GetAllAsync();
@@ -86,6 +86,48 @@ namespace WineCellarHB2024.Controllers
 
             return Ok(bottleGetDTO);
  
+        }
+
+        [HttpGet("Apogee")]
+        public async Task<IActionResult> GetBottlesWithinPeak()
+        {
+            List<Bottle> bottleswithinpeak = await _bottleRepository.GetBottleWithinPeakAsync();
+
+
+            List<BottleGetDTO> bottlesWPeak = new List<BottleGetDTO>();
+
+            foreach (var bottle in bottleswithinpeak)
+            {
+                BottleGetDTO b = new BottleGetDTO();
+                b.Id = bottle.Id;
+                b.Color = bottle.Color;
+                b.Name = bottle.Name;
+                b.FullName = bottle.FullName;
+                b.VintageYear = bottle.VintageYear;
+                b.YearsOfKeep = bottle.YearsOfKeep;
+                b.DomainName = bottle.DomainName;
+                b.PeakInDate = bottle.PeakInDate;
+                b.PeakOutDate = bottle.PeakOutDate;
+                b.GrapeVariety = bottle.GrapeVariety;
+                b.Tava = bottle.Tava;
+                b.Capacity = bottle.Capacity;
+                b.WineMakerName = bottle.WineMakerName;
+                b.VintageName = bottle.VintageName;
+                b.Aroma = bottle.Aroma;
+                b.Price = bottle.Price;
+                b.PurchaseDate = bottle.PurchaseDate;
+                b.RelatedMeals = bottle.RelatedMeals;
+                b.DrawerPosition = bottle.DrawerPosition;
+                b.DrawerId = bottle.DrawerId;
+               
+                bottlesWPeak.Add(b);
+            }
+            
+          
+
+
+            return Ok(bottlesWPeak);
+
         }
 
 

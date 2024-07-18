@@ -83,6 +83,15 @@ using System.Threading.Tasks;
         {
            return await _ct.Bottles.FirstOrDefaultAsync(b => b.DrawerId == drawerId && b.DrawerPosition == drawerPosition);
         }
+        public async Task<List<Bottle>> GetBottleWithinPeakAsync()
+        {
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now) ;
+
+            return await _ct.Bottles
+                .Where(b => (b.PeakInDate<=currentDate) && b.PeakOutDate >= currentDate)
+                .ToListAsync();
+        }
+
     }
 
 }

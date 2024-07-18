@@ -37,6 +37,11 @@ namespace DALTests.Business
             return await Task.Run(() => { return bottles.FirstOrDefault(b => b.DrawerId == drawerId && b.DrawerPosition == drawerPosition); });
         }
 
+        public Task<List<Bottle>> GetBottleWithinPeakAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Bottle> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
