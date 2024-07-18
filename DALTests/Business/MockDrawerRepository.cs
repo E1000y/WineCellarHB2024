@@ -28,6 +28,10 @@ namespace DALTests.Business
         {
             throw new NotImplementedException();
         }
+        public Task DeleteChainBotAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<List<Drawer>> GetAllAsync()
         {

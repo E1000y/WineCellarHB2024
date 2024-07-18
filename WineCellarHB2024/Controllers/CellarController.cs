@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using DAL.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -109,6 +110,8 @@ namespace WineCellarHB2024.Controllers
                 return BadRequest();
             Cellar cellar = await cellarRepository.GetByIdAsync(id);
 
+            await cellarRepository.DeleteChainBotAsync(id);
+            await cellarRepository.DeleteChainDrawAsync(id);
             await cellarRepository.DeleteAsync(id);
 
             return Ok(cellar);

@@ -65,6 +65,10 @@ namespace DAL.Repository
             _ct.Drawers.Remove(Id);
            await _ct.SaveChangesAsync();
         }
+        public async Task DeleteChainBotAsync(int id)
+        {
+            await _ct.Bottles.Include(d => d.Drawer).Where(b => b.Drawer.Id.Equals(id)).ExecuteDeleteAsync();
+        }
 
         public async Task<Drawer>? GetByCellarIdAndNumberAsync(int cellarId, int number)
         {

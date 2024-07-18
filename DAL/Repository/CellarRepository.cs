@@ -40,7 +40,7 @@ namespace DAL.Repository
             await _ct.Cellars.Where(u => u.Id == cellar.Id).ExecuteUpdateAsync(
                 updates => updates.
                 SetProperty(c => c.Name, cellar.Name).
-                      SetProperty(c => c.Family, cellar.Family ).
+                      SetProperty(c => c.Family, cellar.Family).
                       SetProperty(c => c.Manufacturer, cellar.Manufacturer).
                       SetProperty(c => c.Temperature, cellar.Temperature).
                       SetProperty(c => c.CellarUserId, cellar.CellarUserId));
@@ -51,7 +51,16 @@ namespace DAL.Repository
             await _ct.Cellars.Where(c => c.Id == id).ExecuteDeleteAsync();
             await _ct.SaveChangesAsync();
         }
+        public async Task DeleteChainBotAsync(int id)
+        {
+            await _ct.Bottles.Include(d => d.Drawer)
+                .ThenInclude(c => c.Cellar).Where(b => b.Drawer.Cellar.Id.Equals(id)).ExecuteDeleteAsync();
+        }
+        public async Task DeleteChainDrawAsync(int id)
+        {
+            await _ct.Drawers.Include(c => c.Cellar).Where(d => d.Cellar.Id.Equals(id)).ExecuteDeleteAsync();
 
+        }
     }
 }
 

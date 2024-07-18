@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using Models;
 using Microsoft.AspNetCore.Authorization;
+using DAL.Repository;
 
 namespace WineCellarHB2024.Controllers
 {
@@ -143,7 +144,9 @@ namespace WineCellarHB2024.Controllers
             }
 
             Drawer drawer = await _drawerRepository.GetByIdAsync(id);
-           await _drawerRepository.DeleteAsync(id);
+
+            await _drawerRepository.DeleteChainBotAsync(id);
+            await _drawerRepository.DeleteAsync(id);
 
             return Ok(drawer);
         }
