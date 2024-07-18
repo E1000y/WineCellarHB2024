@@ -17,8 +17,11 @@ namespace DAL.Business
         {
             Bottle? bottle = await _bottleRepository.GetBottleByDrawerIdAndDrawerPositionAsync(drawerId, drawerPosition);
 
+            //if (bottle != null) { return true; }
+            //else { return false; }
+
             return bottle != null;
-        }
+           }
 
         public async Task<bool> IsBottleExistingForDrawerIdAndDrawerPositionAndIsNotItselfAsync(BottlePutDTO bottletoput)
         {

@@ -19,7 +19,7 @@ namespace DAL.Business.Tests
         public async Task IsBottleExistingForDrawerIdAndDrawerPositionAsyncTestTrue()
         {
             //Arrange
-            BottleBusiness btbiz = new BottleBusiness(new MockBottleRepository());
+            BottleBusiness btbiz = new BottleBusiness(new MockBottleRepository(), new MockDrawerRepository());
 
             //Act
             var result = await btbiz.IsBottleExistingForDrawerIdAndDrawerPositionAsync(1, 1);
@@ -34,7 +34,7 @@ namespace DAL.Business.Tests
         {
             //Arrange
 
-            BottleBusiness btbiz = new BottleBusiness(new MockBottleRepository());
+            BottleBusiness btbiz = new BottleBusiness(new MockBottleRepository(), new MockDrawerRepository());
 
             //Act
             var result = await btbiz.IsBottleExistingForDrawerIdAndDrawerPositionAsync(2, 2);
@@ -55,7 +55,7 @@ namespace DAL.Business.Tests
                 DrawerId = 1,
                 DrawerPosition = 1,
             };
-            BottleBusiness btbiz = new BottleBusiness(new MockBottleRepository());
+            BottleBusiness btbiz = new BottleBusiness(new MockBottleRepository(), new MockDrawerRepository());
             
             //Act
 
