@@ -20,5 +20,12 @@ namespace DAL.Interfaces
 
 
         public Task DeleteAsync(string id);
+
+        public Task DeleteChainBotAsync(string id);
+
+        public Task DeleteChainDrawAsync(string id);
+
+        public Task DeleteChainCelAsync(string id);
+
     }
 }
