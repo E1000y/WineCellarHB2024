@@ -35,7 +35,17 @@ namespace DAL.Repository
         }
         public async Task UpdateAsync(Drawer drawer)
         {
-            _ct.Drawers.Update(drawer);
+            await _ct.Drawers
+                .Where(d => d.Id == drawer.Id)
+                .ExecuteUpdateAsync(setters => setters
+                .SetProperty(d => d.CellarId, drawer.CellarId)
+                .SetProperty(d => d.Number, drawer.Number)
+                .SetProperty(d => d.NbOfBottlesPerDrawer, drawer.NbOfBottlesPerDrawer));
+               
+
+
+
+
             await _ct.SaveChangesAsync();
             
         }
